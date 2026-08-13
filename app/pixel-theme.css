@@ -1,0 +1,104 @@
+:root {
+  --bg: #f7f4ff;
+  --paper: #fff;
+  --ink: #33264a;
+  --muted: #746984;
+  --line: #dcd3e8;
+  --pink: #ff70b7;
+  --purple: #8b5cf6;
+  --green: #43d6b5;
+  --yellow: #ffd166;
+  --blue: #70a5ff;
+  --cyan: #6be4ee;
+  --danger: #e4547d;
+  --radius: 10px;
+}
+body {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(#e9e1f5 1px, transparent 1px),
+    linear-gradient(90deg, #e9e1f5 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.main {
+  background: #f7f4fff2;
+}
+.sidebar {
+  background: #33264a;
+}
+.brand-mark {
+  border: 2px solid #fff;
+  box-shadow: 3px 3px 0 #8b5cf6;
+  border-radius: 4px;
+}
+.sidebar nav a {
+  border-radius: 4px;
+}
+.sidebar nav a:hover {
+  background: #4b3967;
+}
+.strip,
+.kra,
+.data-table,
+.kpi-table {
+  box-shadow: 3px 4px 0 #cfc1e2;
+}
+.strip {
+  border: 2px solid var(--line);
+  margin-top: -1px;
+}
+.strip:before {
+  width: 5px;
+  top: 0;
+  bottom: 0;
+  border-radius: 0;
+}
+.button,
+button {
+  border-width: 2px;
+  border-radius: 5px;
+  box-shadow: 3px 3px 0 #c2afd9;
+}
+.button:active,
+button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #c2afd9;
+}
+.pixel-icon {
+  image-rendering: pixelated;
+}
+.project-hero {
+  border: 2px solid #5e477a;
+  box-shadow: 5px 6px 0 #c7b2de;
+  border-radius: 6px;
+}
+.ball-callout {
+  border: 2px solid #c8b3df;
+  border-radius: 5px;
+}
+.notice {
+  border-width: 2px;
+  border-radius: 5px;
+}
+.kra {
+  border-radius: 0 0 6px 6px;
+}
+.bay {
+  border-radius: 0 0 6px 6px;
+  border-inline: 1px solid #d7cae7;
+  border-bottom: 1px solid #d7cae7;
+}
+.status:before {
+  border-radius: 1px;
+}
+.avatar {
+  border-radius: 4px;
+}
+.field input,
+.field select,
+.field textarea,
+.filterbar input,
+.filterbar select {
+  border-width: 2px;
+  border-radius: 4px;
+}

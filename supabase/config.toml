@@ -1,0 +1,13 @@
+project_id = "pmo-tracker"
+[api]
+enabled = true
+port = 54321
+[db]
+port = 54322
+major_version = 17
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["http://127.0.0.1:3000"]
+enable_signup = false
+
