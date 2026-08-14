@@ -53,7 +53,9 @@ export type ProjectWorkspace = Tables<"projects"> & {
   pmo_officer: Pick<Tables<"people">, "name">;
   ball_owner: Pick<Tables<"people">, "name"> | null;
   project_stages: Tables<"project_stages">[];
-  project_participant_assignments: Tables<"project_participant_assignments">[];
+  project_participant_assignments: (Tables<"project_participant_assignments"> & {
+    people: Pick<Tables<"people">, "id" | "name">;
+  })[];
   project_references: Tables<"project_references">[];
   project_system_scopes: Tables<"project_system_scopes">[];
 };
@@ -170,7 +172,7 @@ export async function getProjectByCode(code: string, client?: DataClient) {
       .order("sort_order"),
     supabase
       .from("project_participant_assignments")
-      .select("*")
+      .select("*, people!inner(id, name)")
       .eq("project_id", project.id)
       .order("effective_from"),
     supabase
@@ -191,7 +193,8 @@ export async function getProjectByCode(code: string, client?: DataClient) {
     data: {
       ...project,
       project_stages: stages.data ?? [],
-      project_participant_assignments: participants.data ?? [],
+      project_participant_assignments: (participants.data ??
+        []) as ProjectWorkspace["project_participant_assignments"],
       project_references: references.data ?? [],
       project_system_scopes: scopes.data ?? [],
     } as ProjectWorkspace,

@@ -10,6 +10,7 @@ import {
   addBumpAction,
   addProgressAction,
   changeStateAction,
+  transferBallAction,
 } from "../actions";
 export default async function Workspace({
   params,
@@ -203,6 +204,63 @@ export default async function Workspace({
             <label htmlFor="state-reason">Reason</label>
             <textarea id="state-reason" name="reason" maxLength={4000} />
             <button>Change State</button>
+          </form>
+        </details>
+        <details>
+          <summary className="button secondary">Transfer Ball</summary>
+          <form action={transferBallAction} className="action-popover">
+            <input
+              type="hidden"
+              name="projectId"
+              value={workspace?.id ?? "00000000-0000-4000-8000-000000000021"}
+            />
+            <input
+              type="hidden"
+              name="version"
+              value={workspace?.version ?? 0}
+            />
+            <input
+              type="hidden"
+              name="ballOwnerId"
+              value={
+                workspace?.ball_owner_id ??
+                "00000000-0000-0000-0000-000000000002"
+              }
+            />
+            <input type="hidden" name="code" value={p.code} />
+            <label htmlFor="new-ball-owner">New Ball Owner</label>
+            <select
+              id="new-ball-owner"
+              name="newBallOwnerId"
+              required
+              defaultValue={workspace?.ball_owner_id ?? ""}
+            >
+              {demoPreview && (
+                <option value="00000000-0000-0000-0000-000000000002">
+                  Ana Reyes
+                </option>
+              )}
+              {(workspace?.project_participant_assignments ?? [])
+                .filter((assignment) => assignment.effective_to === null)
+                .map((assignment) => (
+                  <option
+                    value={assignment.person_id}
+                    key={assignment.person_id}
+                  >
+                    {assignment.people.name} ({assignment.participant_group})
+                  </option>
+                ))}
+            </select>
+            <button
+              disabled={
+                !demoPreview &&
+                !workspace?.project_participant_assignments.some(
+                  (assignment) => assignment.effective_to === null,
+                )
+              }
+            >
+              Transfer Ball
+            </button>
           </form>
         </details>
       </div>

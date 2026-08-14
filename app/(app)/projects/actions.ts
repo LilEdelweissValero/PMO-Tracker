@@ -46,6 +46,11 @@ async function appendEventFromForm(
         eventType: "state_changed";
         resultingState: string;
         payload: { reason?: string };
+      }
+    | {
+        eventType: "ball_transferred";
+        resultingBallOwnerId: string;
+        payload: Record<string, never>;
       },
 ) {
   const code = String(data.get("code") ?? "");
@@ -91,5 +96,13 @@ export async function changeStateAction(data: FormData) {
     eventType: "state_changed",
     resultingState: String(data.get("resultingState") ?? ""),
     payload: { reason: String(data.get("reason") ?? "") || undefined },
+  });
+}
+
+export async function transferBallAction(data: FormData) {
+  return appendEventFromForm(data, {
+    eventType: "ball_transferred",
+    resultingBallOwnerId: String(data.get("newBallOwnerId") ?? ""),
+    payload: {},
   });
 }
