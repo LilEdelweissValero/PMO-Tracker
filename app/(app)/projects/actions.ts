@@ -18,6 +18,11 @@ export async function createProjectAction(data: FormData) {
     pmoOfficerId: parsed.data.pmoOfficerId,
     ballOwnerId: parsed.data.ballOwnerId,
     scope: parsed.data.scope,
+    participants: [parsed.data.pmoOfficerId, parsed.data.ballOwnerId]
+      .filter((personId, index, people) => people.indexOf(personId) === index)
+      .map((personId) => ({ personId, group: "PMO" })),
+    systemScopes: [],
+    references: [],
   });
   if (result.status !== "success") {
     throw new Error(

@@ -1,7 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { demoProjects } from "@/lib/demo";
+import { demoProjects, isDemoPreview, type ProjectRow } from "@/lib/demo";
+import { getProjectByCode } from "@/lib/data/projects";
+import { listProjectHistory } from "@/lib/data/events";
+import { formatPhilippine } from "@/lib/time";
 import { PageHeader } from "@/components/page-header";
 export default async function Workspace({
   params,
@@ -9,18 +12,52 @@ export default async function Workspace({
   params: Promise<{ code: string }>;
 }) {
   const { code } = await params;
-  const p =
-    demoProjects.find(
-      (x) => x.code.toLowerCase() === decodeURIComponent(code).toLowerCase(),
-    ) ??
-    (code
-      ? {
-          ...demoProjects[2],
-          code: decodeURIComponent(code),
-          name: "New Project",
-        }
-      : null);
-  if (!p) notFound();
+  const decodedCode = decodeURIComponent(code);
+  const demoPreview = await isDemoPreview();
+  const demoProject = demoProjects.find(
+    (x) => x.code.toLowerCase() === decodeURIComponent(code).toLowerCase(),
+  ) ?? {
+    ...demoProjects[2],
+    code: decodedCode,
+    name: "New Project",
+  };
+  const projectResult = demoPreview
+    ? null
+    : await getProjectByCode(decodedCode);
+  if (projectResult?.status === "not_found") notFound();
+  if (projectResult && projectResult.status !== "success") {
+    throw new Error("Unable to load this Project workspace.");
+  }
+  const workspace =
+    projectResult?.status === "success" ? projectResult.data : null;
+  const currentAssignment = workspace?.project_participant_assignments.find(
+    (assignment) =>
+      assignment.person_id === workspace.ball_owner_id &&
+      assignment.effective_to === null,
+  );
+  const currentStage = workspace?.project_stages.find(
+    (stage) => stage.id === workspace.current_stage_id,
+  );
+  const p: ProjectRow = demoPreview
+    ? demoProject
+    : {
+        code: workspace!.code,
+        name: workspace!.name,
+        state: workspace!.state,
+        priority: workspace!.priorities.name,
+        stage: currentStage?.name ?? "Not started",
+        owner: workspace!.ball_owner?.name ?? "Unassigned",
+        group: currentAssignment?.participant_group ?? "PMO",
+        held: "—",
+        pmo: workspace!.pmo_officer.name,
+      };
+  const historyResult = workspace
+    ? await listProjectHistory(workspace.id)
+    : null;
+  if (historyResult && !["success", "empty"].includes(historyResult.status)) {
+    throw new Error("Unable to load this Project history.");
+  }
+  const history = historyResult?.status === "success" ? historyResult.data : [];
   return (
     <>
       <div className="project-hero">
@@ -73,15 +110,19 @@ export default async function Workspace({
               <th>PMO Officer</th>
               <td>{p.pmo}</td>
               <th>Requester</th>
-              <td>Not recorded</td>
+              <td>{workspace?.requester_department_name ?? "Not recorded"}</td>
             </tr>
             <tr>
               <th>Scope / Description</th>
-              <td colSpan={3}>Demo scope has not been entered.</td>
+              <td colSpan={3}>{workspace?.scope ?? "Not recorded"}</td>
             </tr>
             <tr>
               <th>Affected areas</th>
-              <td>Demo System · Intake module</td>
+              <td>
+                {workspace
+                  ? `${workspace.project_system_scopes.length} affected area${workspace.project_system_scopes.length === 1 ? "" : "s"}`
+                  : "Demo System · Intake module"}
+              </td>
               <th>Participants</th>
               <td>
                 {p.owner} ({p.group})
@@ -117,13 +158,30 @@ export default async function Workspace({
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Project created</td>
-              <td>08 Aug 2026, 09:00 PHT</td>
-              <td>08 Aug 2026, 09:04 PHT</td>
-              <td>Pipeline · Ball with {p.owner}</td>
-              <td>Ana Reyes</td>
-            </tr>
+            {demoPreview ? (
+              <tr>
+                <td>Project created</td>
+                <td>08 Aug 2026, 09:00 PHT</td>
+                <td>08 Aug 2026, 09:04 PHT</td>
+                <td>Pipeline · Ball with {p.owner}</td>
+                <td>Ana Reyes</td>
+              </tr>
+            ) : (
+              history.map((event) => (
+                <tr key={event.event_id}>
+                  <td>{event.effective_event_type.replaceAll("_", " ")}</td>
+                  <td>{formatPhilippine(event.effective_at)}</td>
+                  <td>{formatPhilippine(event.recorded_at)}</td>
+                  <td>
+                    {event.resulting_state ?? "—"} ·{" "}
+                    {event.resulting_stage_label ?? "No stage"}
+                  </td>
+                  <td>
+                    {event.actor_id ? event.actor_id.slice(0, 8) : "System"}
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </section>
@@ -144,20 +202,41 @@ export default async function Workspace({
             </tr>
           </thead>
           <tbody>
-            {[
-              "Engagement Meeting",
-              "TICRO #1 Requested",
-              "Dev Start",
-              "Deployed",
-            ].map((s, i) => (
-              <tr key={s}>
-                <td>{i + 1}</td>
+            {(workspace
+              ? workspace.project_stages
+              : [
+                  {
+                    id: "demo-1",
+                    name: "Engagement Meeting",
+                    sort_order: 1,
+                    detail_label: null,
+                  },
+                  {
+                    id: "demo-2",
+                    name: "TICRO #1 Requested",
+                    sort_order: 2,
+                    detail_label: null,
+                  },
+                  {
+                    id: "demo-3",
+                    name: "Dev Start",
+                    sort_order: 3,
+                    detail_label: null,
+                  },
+                  {
+                    id: "demo-4",
+                    name: "Deployed",
+                    sort_order: 4,
+                    detail_label: "Deployment Version",
+                  },
+                ]
+            ).map((stage) => (
+              <tr key={stage.id}>
+                <td>{stage.sort_order}</td>
                 <td>
-                  <strong>{s}</strong>
+                  <strong>{stage.name}</strong>
                 </td>
-                <td>
-                  {s === "Deployed" ? "Deployment Version · required" : "—"}
-                </td>
+                <td>{stage.detail_label ?? "—"}</td>
                 <td>Not planned</td>
                 <td>—</td>
               </tr>

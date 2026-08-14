@@ -177,14 +177,14 @@ export async function getProjectByCode(code: string, client?: DataClient) {
       .from("project_references")
       .select("*")
       .eq("project_id", project.id)
-      .order("created_at"),
+      .order("label"),
     supabase
       .from("project_system_scopes")
       .select("*")
       .eq("project_id", project.id),
   ]);
   for (const related of [stages, participants, references, scopes]) {
-    if (related.error) return listResult<never>(null, related.error);
+    if (related.error) return mapPostgrestError(related.error);
   }
   return {
     status: "success" as const,

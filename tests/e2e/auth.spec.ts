@@ -8,6 +8,7 @@ const nonce = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 const activeEmail = "browser.admin@auth.test";
 const inactiveEmail = `inactive-${nonce}@auth.test`;
 const invitedEmail = `invited-${nonce}@auth.test`;
+const projectCode = `BROWSER-${nonce}`;
 const departmentId = "d0000000-0000-4000-8000-000000000501";
 const personId = "10000000-0000-4000-8000-000000000501";
 const invitedPersonId = crypto.randomUUID();
@@ -88,14 +89,6 @@ test.beforeAll(async () => {
 
 test.afterAll(async () => {
   if (!admin) return;
-  if (!invitedUserId) {
-    const users = await admin.auth.admin.listUsers({ perPage: 1000 });
-    invitedUserId = users.data.users.find(
-      (user) => user.email === invitedEmail,
-    )?.id;
-  }
-  if (invitedUserId) await admin.auth.admin.deleteUser(invitedUserId);
-  await admin.from("people").delete().eq("id", invitedPersonId);
   if (inactiveUserId) await admin.auth.admin.deleteUser(inactiveUserId);
 });
 
@@ -223,6 +216,33 @@ test("Administrator provisions an account and cannot remove the last Administrat
       "Keep at least one active Administrator account.",
     ),
   ).toBeVisible();
+});
+
+test("Administrator creates a live Pipeline Project", async ({ page }) => {
+  await page.goto("/login?returnTo=%2Fprojects%2Fnew");
+  await page.getByLabel("Email").fill(activeEmail);
+  await page.getByLabel("Password").fill(password);
+  await page.getByRole("button", { name: "Sign in" }).click();
+  await expect(page).toHaveURL(/\/projects\/new$/);
+
+  await page.getByLabel("Project Code").fill(projectCode);
+  await page.getByLabel("Project Name").fill("Browser-created Project");
+  await page.getByLabel("Accountable PMO Officer").selectOption(invitedPersonId);
+  await page.getByLabel("Initial Ball Owner").selectOption(invitedPersonId);
+  await page
+    .getByLabel("Scope / Description (optional in Pipeline)")
+    .fill("Created through the production Project form.");
+  await page
+    .getByRole("button", { name: "Create Project & copy Workflow Template" })
+    .click();
+
+  await expect(page).toHaveURL(
+    new RegExp(`/projects/${encodeURIComponent(projectCode)}$`),
+  );
+  await expect(
+    page.getByRole("heading", { name: "Browser-created Project" }),
+  ).toBeVisible();
+  await expect(page.getByText("Pipeline", { exact: true }).first()).toBeVisible();
 });
 
 test("a simulated Profile failure leaves no orphan Auth user", async () => {
