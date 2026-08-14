@@ -1,14 +1,24 @@
 {
   "mode": "deep",
-  "module": "SHIP",
-  "last_commit": "visual-overhaul-complete",
+  "module": "EXECUTE",
+  "last_commit": "task-2-local-migration-baseline-complete",
   "artifacts": [
     "PRODUCT.md",
     "DESIGN.md",
     ".impeccable/design.json",
     ".impeccable/surfaces/app-app-dashboard-page-tsx.md",
+    ".ijfw/memory/brief.md",
     ".ijfw/memory/plan.md",
-    ".ijfw/sessions/session_2026-08-14_10-30-00.md"
+    "docs/production-readiness-plan.md",
+    "supabase/config.toml",
+    "supabase/migrations/202608140001_extensions_and_types.sql",
+    "supabase/migrations/202608140002_directory_and_configuration.sql",
+    "supabase/migrations/202608140003_projects_and_history.sql",
+    "supabase/migrations/202608140004_security.sql",
+    "supabase/migrations/202608140005_project_commands.sql",
+    "supabase/migrations/202608140006_projections_and_reports.sql",
+    "supabase/migrations/202608140007_reference_data.sql",
+    "supabase/seed.sql"
   ],
-  "next": "Start a new session for functional implementation; preserve the Kinetic Project Studio contract."
+  "next": "Task 3: harden relational invariants, foreign keys, and indexes."
 }

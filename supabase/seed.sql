@@ -1,0 +1,4 @@
+-- Local-only data belongs in this file. The release-one baseline currently has
+-- no synthetic Auth users or demo projects, so resets remain deterministic and
+-- do not introduce credentials. Production reference choices are maintained by
+-- migration 202608140007_reference_data.sql instead.

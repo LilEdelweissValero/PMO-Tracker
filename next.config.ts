@@ -1,3 +1,13 @@
 import type { NextConfig } from "next";
-const nextConfig: NextConfig = { reactStrictMode: true };
+
+const projectRoot = import.meta.dirname;
+
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
+  outputFileTracingRoot: projectRoot,
+  turbopack: {
+    root: projectRoot,
+  },
+};
+
 export default nextConfig;

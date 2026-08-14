@@ -1,0 +1,5 @@
+-- This ordered migration boundary is intentionally empty in the replacement
+-- baseline. Task 6 adds security-invoker projections and report functions here
+-- after the event replay contract is covered by database tests. Keeping the
+-- boundary now makes the first remote baseline reviewable and prevents later
+-- renumbering of the reference-data migration.

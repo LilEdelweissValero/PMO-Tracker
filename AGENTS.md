@@ -16,6 +16,7 @@ signals:
     ratio: 1
     count: 43
 ---
+
 # AGENTS.md
 
 This file follows the open AGENTS.md spec (https://agents.md/) and is the
@@ -26,23 +27,27 @@ files (CLAUDE.md, GEMINI.md, WAYLAND.md, codex/AGENTS.md, .cursorrules,
 Five IJFW-managed regions live in this file. Content outside the markers is
 yours -- IJFW will never touch it.
 
-| Region | Purpose |
-|---|---|
-| MEMORY | Project memory recalled from `.ijfw/memory/` |
-| ROUTING | Platform skill-routing rules |
-| AGENTS | Registered agent roster |
-| BLACKBOARD | Multi-CLI orchestration scratchpad (Pillar B) |
+| Region     | Purpose                                                                           |
+| ---------- | --------------------------------------------------------------------------------- |
+| MEMORY     | Project memory recalled from `.ijfw/memory/`                                      |
+| ROUTING    | Platform skill-routing rules                                                      |
+| AGENTS     | Registered agent roster                                                           |
+| BLACKBOARD | Multi-CLI orchestration scratchpad (Pillar B)                                     |
 | DISCIPLINE | Per-domain discipline rules (code \| narrative \| business \| design \| research) |
 
 <!-- IJFW-MEMORY-START -->
+
 Project memory at .ijfw/memory/. Call `ijfw_memory_prelude` for full context.
+
 <!-- IJFW-MEMORY-END -->
 
 <!-- IJFW-ROUTING-START -->
 <!-- IJFW-ROUTING-END -->
 
 <!-- IJFW-AGENTS-START -->
-No project agents yet. Run `ijfw team` to set them up.
+
+- **ijfw-code-fixer** -- ijfw-code-fixer for software projects; owns module.
+- **ijfw-integration-checker** -- ijfw-integration-checker for software projects; owns test.
 <!-- IJFW-AGENTS-END -->
 
 <!-- IJFW-BLACKBOARD-START -->

@@ -1,3 +1,16 @@
+# PMO Tracker functional production plan
+
+The active implementation plan is:
+
+- docs/production-readiness-plan.md
+- 24 tasks across database, security, application wiring, reports, testing,
+  deployment, and UAT.
+- Tasks 1–2 are complete; Task 3 (relational invariants and indexes) is next.
+- Remote Supabase changes are gated on local database evidence and explicit
+  user approval.
+
+## Previous completed plan
+
 # PMO Tracker visual overhaul plan
 
 Goal: Implement the approved Kinetic Project Studio across the existing web interface without changing business behavior or data flows.

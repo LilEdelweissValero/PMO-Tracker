@@ -176,12 +176,7 @@ export default function Dashboard() {
           </div>
           <Link className="bump-button" href="/projects/DEMO-021?dialog=bump">
             <span>Bump</span>
-            <Image
-              src="/assets/fist.png"
-              alt=""
-              width={58}
-              height={58}
-            />
+            <Image src="/assets/fist.png" alt="" width={58} height={58} />
           </Link>
         </div>
         <div className="bump-feed">
