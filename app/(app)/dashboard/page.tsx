@@ -177,7 +177,7 @@ export default function Dashboard() {
           <Link className="bump-button" href="/projects/DEMO-021?dialog=bump">
             <span>Bump</span>
             <Image
-              src="/assets/bump-fist-3d.png"
+              src="/assets/fist.png"
               alt=""
               width={58}
               height={58}
@@ -215,7 +215,7 @@ export default function Dashboard() {
         <div className="ball-artwork">
           <span className="ball-orbit" aria-hidden="true" />
           <Image
-            src="/assets/ball-3d.png"
+            src="/assets/ball.png"
             alt="A polished 3D basketball representing current Project responsibility"
             width={360}
             height={360}

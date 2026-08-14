@@ -14,7 +14,7 @@ export default function Ball() {
           <div className="ball-view-header-art" aria-hidden="true">
             <span />
             <Image
-              src="/assets/ball-3d.png"
+              src="/assets/ball.png"
               alt=""
               width={150}
               height={150}

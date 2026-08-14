@@ -34,7 +34,7 @@ export default async function Workspace({
           </div>
         </div>
         <div className="ball-callout">
-          <Image src="/assets/ball-3d.png" alt="" width={92} height={92} />
+          <Image src="/assets/ball.png" alt="" width={92} height={92} />
           <span>
             <small>Ball with · {p.group}</small>
             <strong>{p.owner}</strong>
@@ -45,7 +45,7 @@ export default async function Workspace({
       <div className="page-actions project-actions">
         <button className="pink">Add Progress</button>
         <button className="secondary">
-          <Image src="/assets/bump-fist-3d.png" alt="" width={34} height={34} />
+          <Image src="/assets/fist.png" alt="" width={34} height={34} />
           Add Bump
         </button>
         <button className="secondary">Change State</button>
