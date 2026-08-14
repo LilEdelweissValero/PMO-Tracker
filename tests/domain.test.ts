@@ -36,4 +36,15 @@ describe("Project invariants", () => {
     ];
     expect(netOwnershipMs(period, holds)).toBe(60 * 60 * 1000 * 60);
   });
+  it("merges overlapping Holds before subtracting paused time", () => {
+    const period = {
+      start: "2026-08-01T00:00:00Z",
+      end: "2026-08-05T00:00:00Z",
+    };
+    const holds = [
+      { start: "2026-08-02T00:00:00Z", end: "2026-08-03T12:00:00Z" },
+      { start: "2026-08-03T00:00:00Z", end: "2026-08-04T00:00:00Z" },
+    ];
+    expect(netOwnershipMs(period, holds)).toBe(48 * 60 * 60 * 1000);
+  });
 });

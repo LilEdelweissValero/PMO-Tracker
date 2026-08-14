@@ -20,6 +20,7 @@
     "db:reset": "supabase db reset",
     "db:lint": "supabase db lint --local --fail-on error",
     "db:test": "supabase test db",
+    "db:verify": "node scripts/verify-database.mjs",
     "db:types": "supabase gen types typescript --local --schema public > lib/database.types.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check ."

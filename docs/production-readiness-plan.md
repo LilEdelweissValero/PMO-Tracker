@@ -2,7 +2,7 @@
 
 Status: Approved and in progress
 
-Progress: Tasks 1–5 completed on 2026-08-14. Task 6 is next.
+Progress: Tasks 1–7 completed on 2026-08-14. Task 8 is next.
 
 ## 1. Outcome
 
@@ -271,7 +271,7 @@ Verify:
   Leadership test identities pass the policy matrix.
 - Direct writes that should be RPC-only are denied.
 
-### Task 5: Implement transactional command RPCs
+### Task 5: Implement transactional command RPCs (complete)
 
 What:
 
@@ -299,7 +299,7 @@ Verify:
   version case is rejected atomically.
 - Failed commands leave no partial rows.
 
-### Task 6: Build projections and report queries
+### Task 6: Build projections and report queries (complete)
 
 What:
 
@@ -325,7 +325,7 @@ Verify:
   Ball transfers, terminal states, and a chosen as-of timestamp.
 - Current projection equals replayed projection for every fixture.
 
-### Task 7: Add database test infrastructure
+### Task 7: Add database test infrastructure (complete)
 
 What:
 

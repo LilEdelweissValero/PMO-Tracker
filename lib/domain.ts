@@ -44,10 +44,30 @@ export function overlapMs(a: Span, b: Span, now = Date.now()) {
   return Math.max(0, end - start);
 }
 export function netOwnershipMs(period: Span, holds: Span[], now = Date.now()) {
-  const gross =
-    (period.end ? Date.parse(period.end) : now) - Date.parse(period.start);
-  return Math.max(
-    0,
-    gross - holds.reduce((sum, hold) => sum + overlapMs(period, hold, now), 0),
-  );
+  const periodStart = Date.parse(period.start);
+  const periodEnd = period.end ? Date.parse(period.end) : now;
+  const gross = Math.max(0, periodEnd - periodStart);
+  const overlaps = holds
+    .map((hold) => ({
+      start: Math.max(periodStart, Date.parse(hold.start)),
+      end: Math.min(periodEnd, hold.end ? Date.parse(hold.end) : now),
+    }))
+    .filter((hold) => hold.end > hold.start)
+    .sort((left, right) => left.start - right.start);
+
+  let paused = 0;
+  let mergedStart = 0;
+  let mergedEnd = 0;
+  for (const overlap of overlaps) {
+    if (overlap.start > mergedEnd) {
+      paused += Math.max(0, mergedEnd - mergedStart);
+      mergedStart = overlap.start;
+      mergedEnd = overlap.end;
+    } else {
+      mergedEnd = Math.max(mergedEnd, overlap.end);
+    }
+  }
+  paused += Math.max(0, mergedEnd - mergedStart);
+
+  return Math.max(0, gross - paused);
 }
