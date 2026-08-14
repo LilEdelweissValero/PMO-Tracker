@@ -1,8 +1,13 @@
 import type { NextConfig } from "next";
+import {
+  PHASE_DEVELOPMENT_SERVER,
+  PHASE_PRODUCTION_SERVER,
+} from "next/constants";
+import { readServerEnvironment } from "./lib/env";
 
 const projectRoot = import.meta.dirname;
 
-const nextConfig: NextConfig = {
+const config: NextConfig = {
   experimental: {
     useTypeScriptCli: false,
   },
@@ -13,4 +18,9 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default function nextConfig(phase: string) {
+  if (phase === PHASE_DEVELOPMENT_SERVER || phase === PHASE_PRODUCTION_SERVER) {
+    readServerEnvironment();
+  }
+  return config;
+}

@@ -1,8 +1,9 @@
 "use server";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { isDemo } from "@/lib/demo";
 export async function login(formData: FormData) {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) redirect("/dashboard");
+  if (isDemo) redirect("/dashboard");
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword({
     email: String(formData.get("email")),

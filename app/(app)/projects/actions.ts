@@ -3,11 +3,11 @@ import { projectSchema } from "@/lib/validation";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { isDemo } from "@/lib/demo";
 export async function createProjectAction(data: FormData) {
   const parsed = projectSchema.safeParse(Object.fromEntries(data));
   if (!parsed.success) throw new Error(parsed.error.issues[0]?.message);
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL)
-    redirect(`/projects/${encodeURIComponent(parsed.data.code)}`);
+  if (isDemo) redirect(`/projects/${encodeURIComponent(parsed.data.code)}`);
   const supabase = await createClient();
   const { error } = await supabase.rpc("create_project", {
     input: {

@@ -2,7 +2,8 @@
 
 Status: Approved and in progress
 
-Progress: Tasks 1–7 completed on 2026-08-14. Task 8 is next.
+Progress: Tasks 1–7 and 10 completed on 2026-08-14. Tasks 8–9 await the
+hosted-project gate; Task 11 is next locally.
 
 ## 1. Outcome
 
@@ -409,7 +410,7 @@ Rollback:
 - After production data exists, use forward-only corrective migrations and
   restore procedures; never reset the linked database.
 
-### Task 10: Add typed environment and Supabase clients
+### Task 10: Add typed environment and Supabase clients (complete)
 
 What:
 

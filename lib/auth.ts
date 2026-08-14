@@ -1,8 +1,9 @@
 import { redirect } from "next/navigation";
 import { createClient } from "./supabase/server";
+import { isDemo } from "./demo";
 export type Role = "administrator" | "pmo_officer" | "leadership_viewer";
 export async function session() {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return null;
+  if (isDemo) return null;
   const supabase = await createClient();
   const {
     data: { user },

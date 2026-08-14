@@ -50,4 +50,4 @@ export const demoProjects: ProjectRow[] = [
     pmo: "Ana Reyes",
   },
 ];
-export const isDemo = !process.env.NEXT_PUBLIC_SUPABASE_URL;
+export const isDemo = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
