@@ -338,18 +338,21 @@ export type Database = {
         Row: {
           active: boolean;
           created_at: string;
+          email: string | null;
           id: string;
           person_id: string;
         };
         Insert: {
           active?: boolean;
           created_at?: string;
+          email?: string | null;
           id: string;
           person_id: string;
         };
         Update: {
           active?: boolean;
           created_at?: string;
+          email?: string | null;
           id?: string;
           person_id?: string;
         };
@@ -1532,6 +1535,8 @@ export type Database = {
       };
       has_active_profile: { Args: never; Returns: boolean };
       is_admin: { Args: never; Returns: boolean };
+      manage_profile_access: { Args: { input: Json }; Returns: string };
+      provision_profile: { Args: { input: Json }; Returns: string };
       reassign_project_pmo: { Args: { input: Json }; Returns: undefined };
       record_project_audit: {
         Args: {

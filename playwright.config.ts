@@ -41,6 +41,8 @@ for (const [name, value] of Object.entries(process.env)) {
 
 export default defineConfig({
   testDir: "./tests/e2e",
+  globalSetup: "./tests/e2e/reset-database.ts",
+  globalTeardown: "./tests/e2e/reset-database.ts",
   fullyParallel: false,
   use: {
     baseURL: "http://127.0.0.1:3107",

@@ -660,6 +660,15 @@ textarea:focus-visible {
   background: #fbf8ff;
 }
 
+.table-scroll {
+  overflow-x: auto;
+  padding: 0 0 14px;
+}
+
+.table-scroll .data-table {
+  min-width: 820px;
+}
+
 .status {
   display: inline-flex;
   align-items: center;
@@ -672,6 +681,16 @@ textarea:focus-visible {
   padding: 5px 8px;
   font-size: 9px;
   font-weight: 850;
+}
+
+.status.active {
+  color: #244500;
+  background: #e4f8a8;
+}
+
+.status.inactive {
+  color: #64203d;
+  background: #ffe0ec;
 }
 
 .status::before {
@@ -836,6 +855,126 @@ textarea:focus-visible {
 
 .field textarea {
   resize: vertical;
+}
+
+.access-provisioning {
+  scroll-margin-top: 24px;
+}
+
+.access-provisioning .section-head p,
+.section-head > p {
+  max-width: 48ch;
+  margin: 0;
+  color: var(--muted-ink);
+}
+
+.access-form {
+  max-width: none;
+}
+
+.role-picker {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.role-picker legend {
+  margin-bottom: 9px;
+  font-weight: 800;
+}
+
+.role-picker label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 9px;
+  min-height: 86px;
+  padding: 12px;
+  background: var(--white);
+  border: 1px solid #d8cebd;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.role-picker input {
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  accent-color: var(--studio-violet);
+}
+
+.role-picker span {
+  display: grid;
+  gap: 4px;
+}
+
+.role-picker small {
+  color: var(--muted-ink);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.access-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.form-message {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.form-message.success {
+  color: #315900;
+}
+
+.form-message.error {
+  color: var(--danger);
+}
+
+.access-manager summary {
+  width: fit-content;
+  color: var(--studio-violet-deep);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.manage-access-form {
+  display: grid;
+  gap: 14px;
+  min-width: 420px;
+  margin-top: 12px;
+  padding: 16px;
+  background: var(--instrument-warm);
+  border-radius: var(--radius-md);
+  box-shadow: 0 7px 0 #ded3bf;
+}
+
+.manage-access-form .role-picker {
+  grid-template-columns: 1fr;
+}
+
+.manage-access-form .role-picker label {
+  min-height: 0;
+}
+
+.account-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+}
+
+.account-toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--studio-violet);
 }
 
 .empty {
@@ -1897,5 +2036,15 @@ textarea:focus-visible {
   .ball-artwork img {
     transform: none;
     filter: drop-shadow(0 14px 14px rgba(0, 0, 0, 0.25));
+  }
+}
+
+@media (max-width: 800px) {
+  .role-picker {
+    grid-template-columns: 1fr;
+  }
+
+  .manage-access-form {
+    min-width: 300px;
   }
 }

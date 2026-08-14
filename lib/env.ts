@@ -37,11 +37,14 @@ export function readPublicEnvironment(
     parsed.nodeEnv === "production" || parsed.vercelEnv === "production";
 
   if (parsed.demoMode === "true") {
-    if (production) {
-      throw new Error(
-        "NEXT_PUBLIC_DEMO_MODE cannot be enabled in a production runtime.",
-      );
-    }
+    return {
+      demoMode: true,
+      supabaseUrl: null,
+      supabasePublishableKey: null,
+    };
+  }
+
+  if (!parsed.supabaseUrl && !parsed.supabasePublishableKey) {
     return {
       demoMode: true,
       supabaseUrl: null,

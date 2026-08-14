@@ -11,6 +11,7 @@ const config: NextConfig = {
   allowedDevOrigins: ["127.0.0.1"],
   experimental: {
     useTypeScriptCli: false,
+    webpackBuildWorker: false,
   },
   reactStrictMode: true,
   outputFileTracingRoot: projectRoot,

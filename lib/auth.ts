@@ -1,6 +1,8 @@
 import "server-only";
 
+import { cache } from "react";
 import { redirect } from "next/navigation";
+import { getProfileForUser } from "./data/session";
 import { isDemo } from "./demo";
 import { createClient } from "./supabase/server";
 export { safeReturnPath } from "./auth-paths";
@@ -28,7 +30,7 @@ const demoSession: ActiveSession = {
   roles: ["administrator", "pmo_officer", "leadership_viewer"],
 };
 
-export async function sessionState(): Promise<SessionState> {
+const loadSessionState = async (): Promise<SessionState> => {
   if (isDemo) return demoSession;
 
   const supabase = await createClient();
@@ -41,14 +43,18 @@ export async function sessionState(): Promise<SessionState> {
     typeof claimsData.claims.email === "string"
       ? claimsData.claims.email
       : null;
-  const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("id, person_id, people!inner(name), profile_roles(role)")
-    .eq("id", userId)
-    .maybeSingle();
-
-  if (profileError) throw profileError;
-  if (!profile) return { kind: "inactive", userId, email };
+  const profileResult = await getProfileForUser(userId, supabase);
+  if (profileResult.status === "not_found") {
+    return { kind: "inactive", userId, email };
+  }
+  if (profileResult.status !== "success") {
+    throw new Error(
+      "issue" in profileResult
+        ? profileResult.issue.message
+        : "Unable to load the signed-in Profile.",
+    );
+  }
+  const profile = profileResult.data;
 
   return {
     kind: "active",
@@ -58,7 +64,9 @@ export async function sessionState(): Promise<SessionState> {
     personName: profile.people.name,
     roles: profile.profile_roles.map(({ role }) => role),
   };
-}
+};
+
+export const sessionState = cache(loadSessionState);
 
 export async function session() {
   const state = await sessionState();

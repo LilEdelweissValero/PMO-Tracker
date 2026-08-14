@@ -2,8 +2,8 @@
 
 Status: Approved and in progress
 
-Progress: Tasks 1–7 and 10–11 completed on 2026-08-14. Tasks 8–9 await the
-hosted-project gate; Task 12 is next locally.
+Progress: Tasks 1–7 and 10–13 completed on 2026-08-14. Tasks 8–9 await the
+hosted-project gate; Tasks 14–17 are the usable-product fast path.
 
 ## 1. Outcome
 
@@ -464,7 +464,7 @@ Verify:
 - Login, refresh, expiration, sign-out, inactive profile, and return-path flows
   pass browser tests.
 
-### Task 12: Bootstrap and provision application users
+### Task 12: Bootstrap and provision application users (complete)
 
 What:
 
@@ -491,7 +491,7 @@ Verify:
 - Non-Administrators cannot invoke provisioning even by direct requests.
 - No orphan Auth user remains after a simulated profile failure.
 
-### Task 13: Create the typed data-access layer
+### Task 13: Create the typed data-access layer (complete)
 
 What:
 

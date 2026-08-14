@@ -7,9 +7,9 @@ const live = {
 };
 
 describe("environment validation", () => {
-  it("requires an explicit demo flag when Supabase is absent", () => {
-    expect(() => readPublicEnvironment({ NODE_ENV: "development" })).toThrow(
-      /NEXT_PUBLIC_SUPABASE_URL/,
+  it("falls back to demo preview when Supabase is absent", () => {
+    expect(readPublicEnvironment({ NODE_ENV: "development" }).demoMode).toBe(
+      true,
     );
     expect(
       readPublicEnvironment({
@@ -19,13 +19,13 @@ describe("environment validation", () => {
     ).toBe(true);
   });
 
-  it("rejects demo mode and insecure URLs in production", () => {
-    expect(() =>
+  it("allows read-only demo mode but rejects insecure live URLs in production", () => {
+    expect(
       readPublicEnvironment({
         NODE_ENV: "production",
         NEXT_PUBLIC_DEMO_MODE: "true",
-      }),
-    ).toThrow(/cannot be enabled/);
+      }).demoMode,
+    ).toBe(true);
     expect(() =>
       readPublicEnvironment({
         ...live,
@@ -33,6 +33,15 @@ describe("environment validation", () => {
         NEXT_PUBLIC_SUPABASE_URL: "http://127.0.0.1:54321",
       }),
     ).toThrow(/HTTPS/);
+  });
+
+  it("rejects a partial Supabase configuration", () => {
+    expect(() =>
+      readPublicEnvironment({
+        NODE_ENV: "development",
+        NEXT_PUBLIC_SUPABASE_URL: live.NEXT_PUBLIC_SUPABASE_URL,
+      }),
+    ).toThrow(/PUBLISHABLE_KEY/);
   });
 
   it("rejects documented placeholder values", () => {
