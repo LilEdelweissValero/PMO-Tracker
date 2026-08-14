@@ -23,3 +23,13 @@ export async function appendProjectEvent(
   if (error) return mapPostgrestError(error);
   return { status: "success", data };
 }
+
+export async function closeProject(
+  input: Json,
+  client?: DataClient,
+): Promise<DataResult<string>> {
+  const supabase = await dataClient(client);
+  const { data, error } = await supabase.rpc("close_project", { input });
+  if (error) return mapPostgrestError(error);
+  return { status: "success", data };
+}

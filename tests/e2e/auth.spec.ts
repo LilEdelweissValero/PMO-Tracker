@@ -279,6 +279,19 @@ test("Administrator creates a live Pipeline Project", async ({ page }) => {
   await page.getByLabel("Reason").fill("Waiting for an external dependency.");
   await page.getByRole("button", { name: "Change State" }).click();
   await expect(page.getByText("state changed", { exact: true })).toBeVisible();
+
+  await page
+    .locator("details")
+    .filter({ hasText: "Close Project" })
+    .locator("summary")
+    .click();
+  const closeout = page.locator(".closeout-form");
+  await closeout.getByLabel("DoD explanation").fill("All agreed outcomes were reviewed.");
+  await closeout.getByLabel("Methodology explanation").fill("The delivery method was followed.");
+  await closeout.getByLabel("Documentation explanation").fill("The final record is complete.");
+  await closeout.getByLabel("Stakeholder rating").selectOption("4");
+  await closeout.getByRole("button", { name: "Save Closeout & Close Project" }).click();
+  await expect(page.getByText("Closed", { exact: true }).first()).toBeVisible();
 });
 
 test("a simulated Profile failure leaves no orphan Auth user", async () => {

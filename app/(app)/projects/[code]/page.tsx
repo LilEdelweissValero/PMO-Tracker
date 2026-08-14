@@ -10,6 +10,7 @@ import {
   addBumpAction,
   addProgressAction,
   changeStateAction,
+  closeProjectAction,
   transferBallAction,
 } from "../actions";
 export default async function Workspace({
@@ -261,6 +262,70 @@ export default async function Workspace({
             >
               Transfer Ball
             </button>
+          </form>
+        </details>
+        <details>
+          <summary className="button secondary">Close Project</summary>
+          <form
+            action={closeProjectAction}
+            className="action-popover closeout-form"
+          >
+            <input
+              type="hidden"
+              name="projectId"
+              value={workspace?.id ?? "00000000-0000-4000-8000-000000000021"}
+            />
+            <input
+              type="hidden"
+              name="version"
+              value={workspace?.version ?? 0}
+            />
+            <input type="hidden" name="code" value={p.code} />
+            <label>
+              <input type="checkbox" name="dodMet" /> Definition of Done met
+            </label>
+            <label htmlFor="dod-explanation">DoD explanation</label>
+            <textarea id="dod-explanation" name="dodExplanation" required />
+            <label>
+              <input type="checkbox" name="methodologyCompliant" /> Methodology
+              compliant
+            </label>
+            <label htmlFor="methodology-explanation">
+              Methodology explanation
+            </label>
+            <textarea
+              id="methodology-explanation"
+              name="methodologyExplanation"
+              required
+            />
+            <label>
+              <input type="checkbox" name="documentationComplete" />{" "}
+              Documentation complete
+            </label>
+            <label htmlFor="documentation-explanation">
+              Documentation explanation
+            </label>
+            <textarea
+              id="documentation-explanation"
+              name="documentationExplanation"
+              required
+            />
+            <label htmlFor="stakeholder-rating">Stakeholder rating</label>
+            <select
+              id="stakeholder-rating"
+              name="stakeholderRating"
+              defaultValue="3"
+              required
+            >
+              <option value="1">1 — Poor</option>
+              <option value="2">2 — Needs improvement</option>
+              <option value="3">3 — Acceptable</option>
+              <option value="4">4 — Good</option>
+              <option value="5">5 — Excellent</option>
+            </select>
+            <label htmlFor="stakeholder-comment">Stakeholder comment</label>
+            <textarea id="stakeholder-comment" name="stakeholderComment" />
+            <button>Save Closeout &amp; Close Project</button>
           </form>
         </details>
       </div>

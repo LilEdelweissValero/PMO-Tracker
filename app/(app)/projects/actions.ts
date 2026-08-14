@@ -1,7 +1,12 @@
 "use server";
-import { appendProjectEventInputSchema, projectSchema } from "@/lib/validation";
+import {
+  appendProjectEventInputSchema,
+  closeProjectInputSchema,
+  projectSchema,
+} from "@/lib/validation";
 import {
   appendProjectEvent,
+  closeProject,
   createProject,
 } from "@/lib/actions/project-commands";
 import { redirect } from "next/navigation";
@@ -73,6 +78,40 @@ async function appendEventFromForm(
   revalidatePath(`/projects/${encodeURIComponent(code)}`);
   revalidatePath("/dashboard");
   revalidatePath("/ball");
+  redirect(`/projects/${encodeURIComponent(code)}`);
+}
+
+export async function closeProjectAction(data: FormData) {
+  const code = String(data.get("code") ?? "");
+  if (await isDemoPreview()) redirect(`/projects/${encodeURIComponent(code)}`);
+  const candidate = {
+    projectId: String(data.get("projectId") ?? ""),
+    version: data.get("version"),
+    effectiveAt: new Date().toISOString(),
+    closeout: {
+      dodMet: data.get("dodMet") === "on",
+      dodExplanation: String(data.get("dodExplanation") ?? ""),
+      methodologyCompliant: data.get("methodologyCompliant") === "on",
+      methodologyExplanation: String(data.get("methodologyExplanation") ?? ""),
+      documentationComplete: data.get("documentationComplete") === "on",
+      documentationExplanation: String(
+        data.get("documentationExplanation") ?? "",
+      ),
+      stakeholderRating: data.get("stakeholderRating"),
+      stakeholderComment: String(data.get("stakeholderComment") ?? "") || null,
+    },
+  };
+  const parsed = closeProjectInputSchema.safeParse(candidate);
+  if (!parsed.success) throw new Error(parsed.error.issues[0]?.message);
+  const result = await closeProject(parsed.data as unknown as Json);
+  if (result.status !== "success") {
+    throw new Error(
+      "issue" in result ? result.issue.message : "Project closeout failed.",
+    );
+  }
+  revalidatePath(`/projects/${encodeURIComponent(code)}`);
+  revalidatePath("/projects");
+  revalidatePath("/dashboard");
   redirect(`/projects/${encodeURIComponent(code)}`);
 }
 
