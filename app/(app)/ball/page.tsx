@@ -1,10 +1,25 @@
 import { PageHeader } from "@/components/page-header";
 import { ProjectStrip } from "@/components/project-strip";
-import { demoProjects } from "@/lib/demo";
+import { demoProjects, isDemoPreview } from "@/lib/demo";
+import { listBallQueue } from "@/lib/data/ball";
+import { queueProjectRow } from "@/lib/presentation/project-row";
 import { BallIcon } from "@/components/icons";
 import Image from "next/image";
 const bays = ["PMO", "Developer", "System Owner"] as const;
-export default function Ball() {
+export default async function Ball() {
+  const demoPreview = await isDemoPreview();
+  const result = demoPreview ? null : await listBallQueue();
+  if (result && !["success", "empty"].includes(result.status)) {
+    throw new Error("Unable to load the Ball queue.");
+  }
+  const projects = demoPreview
+    ? demoProjects
+    : result?.status === "success"
+      ? result.data.flatMap((row) => {
+          const project = queueProjectRow(row);
+          return project ? [project] : [];
+        })
+      : [];
   return (
     <>
       <PageHeader
@@ -24,19 +39,19 @@ export default function Ball() {
         }
       />
       <form className="filterbar">
-        <select aria-label="System">
-          <option>All Systems</option>
+        <select aria-label="System" disabled>
+          <option>All Systems · scope setup pending</option>
         </select>
-        <select aria-label="Module">
-          <option>All Modules</option>
+        <select aria-label="Module" disabled>
+          <option>All Modules · scope setup pending</option>
         </select>
-        <select aria-label="PMO Officer">
+        <select aria-label="PMO Officer" disabled>
           <option>All PMO Officers</option>
         </select>
-        <select aria-label="Project State">
+        <select aria-label="Project State" disabled>
           <option>All States</option>
         </select>
-        <select aria-label="Priority">
+        <select aria-label="Priority" disabled>
           <option>All Priorities</option>
         </select>
       </form>
@@ -51,7 +66,7 @@ export default function Ball() {
               {b}
               {b === "Developer" ? "s" : ""}
             </h2>
-            {demoProjects
+            {projects
               .filter((p) => p.group === b)
               .map((p) => (
                 <div key={p.code}>
@@ -59,6 +74,9 @@ export default function Ball() {
                   <ProjectStrip project={p} />
                 </div>
               ))}
+            {!projects.some((project) => project.group === b) && (
+              <div className="notice">No Projects in this bay.</div>
+            )}
           </section>
         ))}
       </div>

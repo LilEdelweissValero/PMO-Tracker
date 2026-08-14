@@ -24,8 +24,13 @@ export type ProjectListItem = Pick<
   stage: Pick<Tables<"project_stages">, "name"> | null;
   pmo_officer: Pick<Tables<"people">, "id" | "name">;
   ball_owner: Pick<Tables<"people">, "id" | "name"> | null;
+  ball_owner_group: Enums<"participant_group"> | null;
+  waiting_seconds: number | null;
 };
-type ProjectListRecord = Omit<ProjectListItem, "stage"> & {
+type ProjectListRecord = Omit<
+  ProjectListItem,
+  "stage" | "ball_owner_group" | "waiting_seconds"
+> & {
   current_stage_id: string | null;
 };
 export type ProjectListFilters = {
@@ -106,11 +111,38 @@ export async function listProjects(
   const stageNames = new Map(
     (stages.data ?? []).map((stage) => [stage.id, stage.name]),
   );
+  const projectIds = result.data.map(({ id }) => id);
+  const [participants, waiting] = await Promise.all([
+    supabase
+      .from("project_participant_assignments")
+      .select("project_id, person_id, participant_group")
+      .in("project_id", projectIds)
+      .is("effective_to", null),
+    supabase
+      .from("project_dashboard_queue")
+      .select("project_id, waiting_seconds")
+      .in("project_id", projectIds),
+  ]);
+  if (participants.error) return mapPostgrestError(participants.error);
+  if (waiting.error) return mapPostgrestError(waiting.error);
+  const groups = new Map(
+    (participants.data ?? []).map((assignment) => [
+      `${assignment.project_id}:${assignment.person_id}`,
+      assignment.participant_group,
+    ]),
+  );
+  const waits = new Map(
+    (waiting.data ?? []).map((item) => [item.project_id, item.waiting_seconds]),
+  );
   const items = result.data.map(({ current_stage_id, ...project }) => ({
     ...project,
     stage: current_stage_id
       ? { name: stageNames.get(current_stage_id) ?? "Unknown Stage" }
       : null,
+    ball_owner_group: project.ball_owner
+      ? (groups.get(`${project.id}:${project.ball_owner.id}`) ?? null)
+      : null,
+    waiting_seconds: waits.get(project.id) ?? null,
   }));
   return {
     status: "success",

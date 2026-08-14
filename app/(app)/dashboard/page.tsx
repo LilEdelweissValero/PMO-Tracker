@@ -8,7 +8,9 @@ import {
   IconShieldCheck,
 } from "@tabler/icons-react";
 import { ProjectStrip } from "@/components/project-strip";
-import { demoProjects } from "@/lib/demo";
+import { demoProjects, isDemoPreview } from "@/lib/demo";
+import { listDashboardQueue } from "@/lib/data/dashboard";
+import { queueProjectRow } from "@/lib/presentation/project-row";
 
 const kras = [
   {
@@ -42,9 +44,22 @@ const kras = [
   },
 ] as const;
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const demoPreview = await isDemoPreview();
+  const result = demoPreview ? null : await listDashboardQueue();
+  if (result && !["success", "empty"].includes(result.status)) {
+    throw new Error("Unable to load the portfolio dashboard.");
+  }
+  const projects = demoPreview
+    ? demoProjects
+    : result?.status === "success"
+      ? result.data.flatMap((row) => {
+          const project = queueProjectRow(row);
+          return project ? [project] : [];
+        })
+      : [];
   const currentBall =
-    demoProjects.find((project) => project.group === "PMO") ?? demoProjects[0];
+    projects.find((project) => project.group === "PMO") ?? projects[0];
 
   return (
     <div className="dashboard-board">
@@ -85,7 +100,7 @@ export default function Dashboard() {
           </Link>
         </div>
         <div className="waiting-list">
-          {demoProjects.map((project) => (
+          {projects.map((project) => (
             <Link
               href={`/projects/${project.code}`}
               className="waiting-item"
@@ -107,6 +122,9 @@ export default function Dashboard() {
               </time>
             </Link>
           ))}
+          {!projects.length && (
+            <div className="notice">No active Projects are waiting.</div>
+          )}
         </div>
       </section>
 
@@ -149,17 +167,22 @@ export default function Dashboard() {
             </span>
             <h2 id="progress-title">Latest Progress</h2>
           </div>
-          <Link
-            className="button pink"
-            href="/projects/DEMO-021?dialog=progress"
-          >
-            Add Progress
-          </Link>
+          {currentBall && (
+            <Link
+              className="button pink"
+              href={`/projects/${encodeURIComponent(currentBall.code)}?dialog=progress`}
+            >
+              Add Progress
+            </Link>
+          )}
         </div>
         <div className="strip-list">
-          {demoProjects.map((project) => (
+          {projects.map((project) => (
             <ProjectStrip key={project.code} project={project} />
           ))}
+          {!projects.length && (
+            <div className="notice">No active Project progress to show.</div>
+          )}
         </div>
       </section>
 
@@ -174,13 +197,18 @@ export default function Dashboard() {
             </span>
             <h2 id="bumps-title">Latest Bumps</h2>
           </div>
-          <Link className="bump-button" href="/projects/DEMO-021?dialog=bump">
-            <span>Bump</span>
-            <Image src="/assets/fist.png" alt="" width={58} height={58} />
-          </Link>
+          {currentBall && (
+            <Link
+              className="bump-button"
+              href={`/projects/${encodeURIComponent(currentBall.code)}?dialog=bump`}
+            >
+              <span>Bump</span>
+              <Image src="/assets/fist.png" alt="" width={58} height={58} />
+            </Link>
+          )}
         </div>
         <div className="bump-feed">
-          {[...demoProjects].reverse().map((project) => (
+          {[...projects].reverse().map((project) => (
             <Link
               href={`/projects/${project.code}`}
               className="bump-entry"
@@ -198,6 +226,9 @@ export default function Dashboard() {
               <time>{project.held}</time>
             </Link>
           ))}
+          {!projects.length && (
+            <div className="notice">No Project conversations to show.</div>
+          )}
         </div>
       </section>
 
@@ -217,14 +248,21 @@ export default function Dashboard() {
             priority
           />
         </div>
-        <div className="ball-owner">
-          <small>Ball with · {currentBall.group}</small>
-          <strong>{currentBall.owner}</strong>
-          <time>
-            <IconClock size={17} />
-            Held {currentBall.held}
-          </time>
-        </div>
+        {currentBall ? (
+          <div className="ball-owner">
+            <small>Ball with · {currentBall.group}</small>
+            <strong>{currentBall.owner}</strong>
+            <time>
+              <IconClock size={17} />
+              Held {currentBall.held}
+            </time>
+          </div>
+        ) : (
+          <div className="ball-owner">
+            <small>Portfolio clear</small>
+            <strong>No active handoffs</strong>
+          </div>
+        )}
         <Link className="button ball-action" href="/ball">
           View Ball relay <IconArrowUpRight size={18} />
         </Link>
