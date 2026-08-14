@@ -1,6 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
-import { BallIcon, BumpIcon } from "@/components/icons";
 import { demoProjects } from "@/lib/demo";
 import { PageHeader } from "@/components/page-header";
 export default async function Workspace({
@@ -34,7 +34,7 @@ export default async function Workspace({
           </div>
         </div>
         <div className="ball-callout">
-          <BallIcon size={34} />
+          <Image src="/assets/ball-3d.png" alt="" width={92} height={92} />
           <span>
             <small>Ball with · {p.group}</small>
             <strong>{p.owner}</strong>
@@ -42,10 +42,10 @@ export default async function Workspace({
           </span>
         </div>
       </div>
-      <div className="page-actions" style={{ marginTop: 14 }}>
+      <div className="page-actions project-actions">
         <button className="pink">Add Progress</button>
         <button className="secondary">
-          <BumpIcon size={18} />
+          <Image src="/assets/bump-fist-3d.png" alt="" width={34} height={34} />
           Add Bump
         </button>
         <button className="secondary">Change State</button>

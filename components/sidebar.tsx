@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   IconLayoutDashboard,
   IconFolders,
@@ -17,6 +20,8 @@ const nav = [
   ["/admin/workflow", "Administration", IconSettings],
 ] as const;
 export function Sidebar() {
+  const pathname = usePathname();
+
   return (
     <aside className="sidebar">
       <Link href="/dashboard" className="brand">
@@ -24,21 +29,32 @@ export function Sidebar() {
           <SparkIcon />
         </span>
         <span>
-          PMO
-          <br />
-          <b>Tracker</b>
+          <b>PMO Tracker</b>
+          <small>Kinetic project studio</small>
         </span>
       </Link>
       <nav aria-label="Primary">
-        {nav.map(([href, label, Icon]) => (
-          <Link key={href} href={href}>
-            <Icon size={20} />
-            <span>{label}</span>
-          </Link>
-        ))}
+        {nav.map(([href, label, Icon]) => {
+          const current =
+            pathname === href ||
+            (href !== "/dashboard" && pathname.startsWith(`${href}/`));
+
+          return (
+            <Link
+              key={href}
+              href={href}
+              aria-current={current ? "page" : undefined}
+            >
+              <Icon size={20} />
+              <span>{label}</span>
+            </Link>
+          );
+        })}
       </nav>
       <div className="sidebar-foot">
-        <span className="avatar">AR</span>
+        <span className="avatar" aria-hidden="true">
+          AR
+        </span>
         <span>
           <b>Ana Reyes</b>
           <small>Administrator</small>

@@ -7,37 +7,24 @@ export default async function Login({
 }) {
   const { error } = await searchParams;
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        display: "grid",
-        placeItems: "center",
-        padding: 20,
-        background: "#262130",
-      }}
-    >
-      <form
-        action={login}
-        style={{
-          width: "min(420px,100%)",
-          background: "white",
-          padding: 30,
-          borderRadius: 16,
-        }}
-      >
-        <div
-          className="brand"
-          style={{ color: "#201c2b", padding: 0, marginBottom: 25 }}
-        >
+    <main className="login-page">
+      <div className="login-atmosphere" aria-hidden="true">
+        <span className="login-orb login-orb-one" />
+        <span className="login-orb login-orb-two" />
+      </div>
+      <form action={login} className="login-card">
+        <div className="brand login-brand">
           <span className="brand-mark">
             <SparkIcon />
           </span>
           <span>
-            PMO <b>Tracker</b>
+            <b>PMO Tracker</b>
+            <small>Kinetic project studio</small>
           </span>
         </div>
-        <h1 style={{ marginBottom: 5 }}>Welcome back</h1>
-        <p style={{ color: "var(--muted)", marginTop: 0 }}>
+        <span className="login-kicker">Portfolio control</span>
+        <h1>Welcome back.</h1>
+        <p className="login-lede">
           Sign in with your provisioned work account.
         </p>
         {error && (
@@ -45,7 +32,7 @@ export default async function Login({
             {error}
           </div>
         )}
-        <div className="field" style={{ marginTop: 20 }}>
+        <div className="field">
           <label htmlFor="email">Email</label>
           <input
             id="email"
@@ -55,7 +42,7 @@ export default async function Login({
             required
           />
         </div>
-        <div className="field" style={{ marginTop: 14 }}>
+        <div className="field">
           <label htmlFor="password">Password</label>
           <input
             id="password"
@@ -65,10 +52,8 @@ export default async function Login({
             required
           />
         </div>
-        <button style={{ width: "100%", marginTop: 22 }}>Sign in</button>
-        <small
-          style={{ display: "block", marginTop: 14, color: "var(--muted)" }}
-        >
+        <button className="login-submit">Sign in</button>
+        <small className="login-help">
           No public registration. Contact an Administrator for access.
         </small>
       </form>

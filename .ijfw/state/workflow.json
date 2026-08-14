@@ -1,0 +1,14 @@
+{
+  "mode": "deep",
+  "module": "SHIP",
+  "last_commit": "visual-overhaul-complete",
+  "artifacts": [
+    "PRODUCT.md",
+    "DESIGN.md",
+    ".impeccable/design.json",
+    ".impeccable/surfaces/app-app-dashboard-page-tsx.md",
+    ".ijfw/memory/plan.md",
+    ".ijfw/sessions/session_2026-08-14_10-30-00.md"
+  ],
+  "next": "Start a new session for functional implementation; preserve the Kinetic Project Studio contract."
+}

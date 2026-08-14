@@ -7,7 +7,10 @@ export function ProjectStrip({ project }: { project: ProjectRow }) {
       className={`strip group-${project.group.toLowerCase().replaceAll(" ", "-")}`}
       href={`/projects/${encodeURIComponent(project.code)}`}
     >
-      <div className="strip-code">{project.code}</div>
+      <div className="strip-code">
+        <span className="group-dot" aria-hidden="true" />
+        {project.code}
+      </div>
       <div className="strip-title">
         <strong>{project.name}</strong>
         <span>
@@ -15,13 +18,13 @@ export function ProjectStrip({ project }: { project: ProjectRow }) {
         </span>
       </div>
       <div className="strip-stage">
-        <span>Stage</span>
+        <span className="strip-label">Stage</span>
         <strong>{project.stage || "Not started"}</strong>
       </div>
       <div className="strip-owner">
         <BallIcon size={21} />
         <span>
-          <small>Ball with</small>
+          <small className="strip-label">Ball with</small>
           <strong>{project.owner}</strong>
         </span>
       </div>

@@ -1,0 +1,458 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-14T10:22:00+08:00",
+  "title": "Design System: PMO Tracker",
+  "extensions": {
+    "colorMeta": {
+      "studio-violet": {
+        "role": "primary",
+        "displayName": "Studio Violet",
+        "canonical": "#5b37f2",
+        "tonalRamp": [
+          "color-mix(in oklch, #5b37f2 55%, black)",
+          "color-mix(in oklch, #5b37f2 70%, black)",
+          "color-mix(in oklch, #5b37f2 85%, black)",
+          "#5b37f2",
+          "color-mix(in oklch, #5b37f2 82%, white)",
+          "color-mix(in oklch, #5b37f2 62%, white)",
+          "color-mix(in oklch, #5b37f2 38%, white)",
+          "color-mix(in oklch, #5b37f2 14%, white)"
+        ]
+      },
+      "studio-violet-deep": {
+        "role": "primary",
+        "displayName": "Studio Violet Deep",
+        "canonical": "#3216a9",
+        "tonalRamp": [
+          "color-mix(in oklch, #3216a9 55%, black)",
+          "color-mix(in oklch, #3216a9 70%, black)",
+          "color-mix(in oklch, #3216a9 85%, black)",
+          "#3216a9",
+          "color-mix(in oklch, #3216a9 82%, white)",
+          "color-mix(in oklch, #3216a9 62%, white)",
+          "color-mix(in oklch, #3216a9 38%, white)",
+          "color-mix(in oklch, #3216a9 14%, white)"
+        ]
+      },
+      "studio-violet-soft": {
+        "role": "primary",
+        "displayName": "Studio Violet Soft",
+        "canonical": "#8067ff",
+        "tonalRamp": [
+          "color-mix(in oklch, #8067ff 55%, black)",
+          "color-mix(in oklch, #8067ff 70%, black)",
+          "color-mix(in oklch, #8067ff 85%, black)",
+          "#8067ff",
+          "color-mix(in oklch, #8067ff 82%, white)",
+          "color-mix(in oklch, #8067ff 62%, white)",
+          "color-mix(in oklch, #8067ff 38%, white)",
+          "color-mix(in oklch, #8067ff 14%, white)"
+        ]
+      },
+      "instrument-cream": {
+        "role": "neutral",
+        "displayName": "Instrument Cream",
+        "canonical": "#fff9ec",
+        "tonalRamp": [
+          "color-mix(in oklch, #fff9ec 30%, black)",
+          "color-mix(in oklch, #fff9ec 45%, black)",
+          "color-mix(in oklch, #fff9ec 60%, black)",
+          "color-mix(in oklch, #fff9ec 75%, black)",
+          "color-mix(in oklch, #fff9ec 88%, black)",
+          "#fff9ec",
+          "color-mix(in oklch, #fff9ec 72%, white)",
+          "color-mix(in oklch, #fff9ec 36%, white)"
+        ]
+      },
+      "instrument-warm": {
+        "role": "neutral",
+        "displayName": "Instrument Warm",
+        "canonical": "#f5ecd9",
+        "tonalRamp": [
+          "color-mix(in oklch, #f5ecd9 30%, black)",
+          "color-mix(in oklch, #f5ecd9 45%, black)",
+          "color-mix(in oklch, #f5ecd9 60%, black)",
+          "color-mix(in oklch, #f5ecd9 75%, black)",
+          "color-mix(in oklch, #f5ecd9 88%, black)",
+          "#f5ecd9",
+          "color-mix(in oklch, #f5ecd9 72%, white)",
+          "color-mix(in oklch, #f5ecd9 36%, white)"
+        ]
+      },
+      "technical-plum": {
+        "role": "neutral",
+        "displayName": "Technical Plum",
+        "canonical": "#17132f",
+        "tonalRamp": [
+          "color-mix(in oklch, #17132f 55%, black)",
+          "color-mix(in oklch, #17132f 70%, black)",
+          "color-mix(in oklch, #17132f 85%, black)",
+          "#17132f",
+          "color-mix(in oklch, #17132f 82%, white)",
+          "color-mix(in oklch, #17132f 62%, white)",
+          "color-mix(in oklch, #17132f 38%, white)",
+          "color-mix(in oklch, #17132f 14%, white)"
+        ]
+      },
+      "technical-raised": {
+        "role": "neutral",
+        "displayName": "Technical Raised",
+        "canonical": "#24204a",
+        "tonalRamp": [
+          "color-mix(in oklch, #24204a 55%, black)",
+          "color-mix(in oklch, #24204a 70%, black)",
+          "color-mix(in oklch, #24204a 85%, black)",
+          "#24204a",
+          "color-mix(in oklch, #24204a 82%, white)",
+          "color-mix(in oklch, #24204a 62%, white)",
+          "color-mix(in oklch, #24204a 38%, white)",
+          "color-mix(in oklch, #24204a 14%, white)"
+        ]
+      },
+      "graphite-ink": {
+        "role": "neutral",
+        "displayName": "Graphite Ink",
+        "canonical": "#19152f",
+        "tonalRamp": [
+          "color-mix(in oklch, #19152f 55%, black)",
+          "color-mix(in oklch, #19152f 70%, black)",
+          "color-mix(in oklch, #19152f 85%, black)",
+          "#19152f",
+          "color-mix(in oklch, #19152f 82%, white)",
+          "color-mix(in oklch, #19152f 62%, white)",
+          "color-mix(in oklch, #19152f 38%, white)",
+          "color-mix(in oklch, #19152f 14%, white)"
+        ]
+      },
+      "muted-ink": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "#665f78",
+        "tonalRamp": [
+          "color-mix(in oklch, #665f78 55%, black)",
+          "color-mix(in oklch, #665f78 70%, black)",
+          "color-mix(in oklch, #665f78 85%, black)",
+          "#665f78",
+          "color-mix(in oklch, #665f78 82%, white)",
+          "color-mix(in oklch, #665f78 62%, white)",
+          "color-mix(in oklch, #665f78 38%, white)",
+          "color-mix(in oklch, #665f78 14%, white)"
+        ]
+      },
+      "mist-line": {
+        "role": "neutral",
+        "displayName": "Mist Line",
+        "canonical": "#ded5c4",
+        "tonalRamp": [
+          "color-mix(in oklch, #ded5c4 30%, black)",
+          "color-mix(in oklch, #ded5c4 45%, black)",
+          "color-mix(in oklch, #ded5c4 60%, black)",
+          "color-mix(in oklch, #ded5c4 75%, black)",
+          "color-mix(in oklch, #ded5c4 88%, black)",
+          "#ded5c4",
+          "color-mix(in oklch, #ded5c4 72%, white)",
+          "color-mix(in oklch, #ded5c4 36%, white)"
+        ]
+      },
+      "action-candy": {
+        "role": "secondary",
+        "displayName": "Action Candy",
+        "canonical": "#ff4eb8",
+        "tonalRamp": [
+          "color-mix(in oklch, #ff4eb8 55%, black)",
+          "color-mix(in oklch, #ff4eb8 70%, black)",
+          "color-mix(in oklch, #ff4eb8 85%, black)",
+          "#ff4eb8",
+          "color-mix(in oklch, #ff4eb8 82%, white)",
+          "color-mix(in oklch, #ff4eb8 62%, white)",
+          "color-mix(in oklch, #ff4eb8 38%, white)",
+          "color-mix(in oklch, #ff4eb8 14%, white)"
+        ]
+      },
+      "action-candy-deep": {
+        "role": "secondary",
+        "displayName": "Action Candy Deep",
+        "canonical": "#d92591",
+        "tonalRamp": [
+          "color-mix(in oklch, #d92591 55%, black)",
+          "color-mix(in oklch, #d92591 70%, black)",
+          "color-mix(in oklch, #d92591 85%, black)",
+          "#d92591",
+          "color-mix(in oklch, #d92591 82%, white)",
+          "color-mix(in oklch, #d92591 62%, white)",
+          "color-mix(in oklch, #d92591 38%, white)",
+          "color-mix(in oklch, #d92591 14%, white)"
+        ]
+      },
+      "signal-cyan": {
+        "role": "tertiary",
+        "displayName": "Signal Cyan",
+        "canonical": "#3ad9ee",
+        "tonalRamp": [
+          "color-mix(in oklch, #3ad9ee 55%, black)",
+          "color-mix(in oklch, #3ad9ee 70%, black)",
+          "color-mix(in oklch, #3ad9ee 85%, black)",
+          "#3ad9ee",
+          "color-mix(in oklch, #3ad9ee 82%, white)",
+          "color-mix(in oklch, #3ad9ee 62%, white)",
+          "color-mix(in oklch, #3ad9ee 38%, white)",
+          "color-mix(in oklch, #3ad9ee 14%, white)"
+        ]
+      },
+      "relay-lime": {
+        "role": "tertiary",
+        "displayName": "Relay Lime",
+        "canonical": "#c6ef55",
+        "tonalRamp": [
+          "color-mix(in oklch, #c6ef55 55%, black)",
+          "color-mix(in oklch, #c6ef55 70%, black)",
+          "color-mix(in oklch, #c6ef55 85%, black)",
+          "#c6ef55",
+          "color-mix(in oklch, #c6ef55 82%, white)",
+          "color-mix(in oklch, #c6ef55 62%, white)",
+          "color-mix(in oklch, #c6ef55 38%, white)",
+          "color-mix(in oklch, #c6ef55 14%, white)"
+        ]
+      },
+      "hold-yellow": {
+        "role": "tertiary",
+        "displayName": "Hold Yellow",
+        "canonical": "#ffd15d",
+        "tonalRamp": [
+          "color-mix(in oklch, #ffd15d 55%, black)",
+          "color-mix(in oklch, #ffd15d 70%, black)",
+          "color-mix(in oklch, #ffd15d 85%, black)",
+          "#ffd15d",
+          "color-mix(in oklch, #ffd15d 82%, white)",
+          "color-mix(in oklch, #ffd15d 62%, white)",
+          "color-mix(in oklch, #ffd15d 38%, white)",
+          "color-mix(in oklch, #ffd15d 14%, white)"
+        ]
+      },
+      "danger": {
+        "role": "tertiary",
+        "displayName": "Recovery Red",
+        "canonical": "#c9345e",
+        "tonalRamp": [
+          "color-mix(in oklch, #c9345e 55%, black)",
+          "color-mix(in oklch, #c9345e 70%, black)",
+          "color-mix(in oklch, #c9345e 85%, black)",
+          "#c9345e",
+          "color-mix(in oklch, #c9345e 82%, white)",
+          "color-mix(in oklch, #c9345e 62%, white)",
+          "color-mix(in oklch, #c9345e 38%, white)",
+          "color-mix(in oklch, #c9345e 14%, white)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "Object White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#242424",
+          "#4a4a4a",
+          "#707070",
+          "#969696",
+          "#bcbcbc",
+          "#dedede",
+          "#f2f2f2",
+          "#ffffff"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Oversized Dashboard greeting and rare focal language."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page-level titles and primary Project names."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Panels, dialogs, and compact section anchors."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Repeated operational reading and field content."
+      },
+      "label": {
+        "displayName": "Instrument Label",
+        "purpose": "Compact metadata and technical kickers only."
+      },
+      "mono": {
+        "displayName": "Audit Mono",
+        "purpose": "Project Codes, timestamps, ages, and formulas."
+      }
+    },
+    "shadows": [
+      {
+        "name": "contact",
+        "value": "0 5px 0 rgba(30, 20, 75, 0.2), 0 10px 24px rgba(30, 20, 75, 0.14)",
+        "purpose": "Tactile resting edge under ordinary controls."
+      },
+      {
+        "name": "deck",
+        "value": "0 12px 0 rgba(47, 26, 126, 0.08), 0 22px 48px rgba(37, 22, 87, 0.16)",
+        "purpose": "Broad grounding under major cream work surfaces."
+      },
+      {
+        "name": "technical-mounted",
+        "value": "0 8px 0 #cfc2ad, 0 20px 36px rgba(29, 20, 55, 0.18)",
+        "purpose": "Firm mounted depth under dark technical stages."
+      },
+      {
+        "name": "candy-contact",
+        "value": "0 5px 0 #d92591, 0 12px 24px rgba(217, 37, 145, 0.22)",
+        "purpose": "Physical edge under scarce principal mutation controls."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Default settling curve for tactile controls and authored objects."
+      },
+      {
+        "name": "control",
+        "value": "180ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Hover lift and active press transitions."
+      },
+      {
+        "name": "ball-settle",
+        "value": "760ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "One entrance settle for the focal Ball; later movement is pointer-triggered and reduced motion removes it."
+      }
+    ],
+    "breakpoints": [
+      { "name": "compact-studio", "value": "1320px" },
+      { "name": "instrument-rail", "value": "1050px" },
+      { "name": "mobile-tray", "value": "700px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "A dark tactile control for ordinary committed actions.",
+      "html": "<button class=\"ds-btn-primary\">Change State</button>",
+      "css": ".ds-btn-primary { min-height:42px; border:0; border-radius:var(--radius-sm,10px); padding:.65rem 1rem; color:var(--white,#fff); background:var(--technical-plum,#17132f); font:800 14px/1.55 var(--font-body,Manrope,sans-serif); box-shadow:0 5px 0 rgba(30,20,75,.2),0 10px 24px rgba(30,20,75,.14); transition:transform 180ms cubic-bezier(.16,1,.3,1),box-shadow 180ms cubic-bezier(.16,1,.3,1); } .ds-btn-primary:hover { transform:translateY(-2px); } .ds-btn-primary:active { transform:translateY(2px); box-shadow:0 2px 0 rgba(30,20,75,.22),0 5px 12px rgba(30,20,75,.12); } .ds-btn-primary:focus-visible { outline:3px solid var(--signal-cyan,#3ad9ee); outline-offset:3px; }"
+    },
+    {
+      "name": "Candy Action Button",
+      "kind": "button",
+      "refersTo": "button-action",
+      "description": "The scarce, high-energy control for the principal mutation on a surface.",
+      "html": "<button class=\"ds-btn-candy\">Add Progress</button>",
+      "css": ".ds-btn-candy { min-height:42px; border:0; border-radius:var(--radius-sm,10px); padding:.65rem 1rem; color:var(--graphite-ink,#19152f); background:var(--action-candy,#ff4eb8); font:800 14px/1.55 var(--font-body,Manrope,sans-serif); box-shadow:0 5px 0 var(--action-candy-deep,#d92591),0 12px 24px rgba(217,37,145,.22); transition:transform 180ms cubic-bezier(.16,1,.3,1); } .ds-btn-candy:hover { transform:translateY(-2px); } .ds-btn-candy:active { transform:translateY(2px); } .ds-btn-candy:focus-visible { outline:3px solid var(--signal-cyan,#3ad9ee); outline-offset:3px; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "A persistent-label field on warm instrument material.",
+      "html": "<label class=\"ds-field\"><span>Project Code</span><input value=\"DEMO-021\" /></label>",
+      "css": ".ds-field { display:grid; gap:7px; color:var(--graphite-ink,#19152f); font:800 14px/1.4 var(--font-body,Manrope,sans-serif); } .ds-field input { min-height:42px; border:1px solid #cfc5b4; border-radius:var(--radius-sm,10px); padding:9px 12px; color:var(--graphite-ink,#19152f); background:var(--white,#fff); font:400 14px/1.55 var(--font-body,Manrope,sans-serif); transition:border-color 160ms ease; } .ds-field input:hover { border-color:var(--studio-violet-soft,#8067ff); } .ds-field input:focus-visible { outline:3px solid var(--signal-cyan,#3ad9ee); outline-offset:3px; }"
+    },
+    {
+      "name": "Selected Navigation Item",
+      "kind": "nav",
+      "description": "A cream physical plate mounted inside the deep-violet navigation field.",
+      "html": "<a class=\"ds-nav-active\" href=\"#\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/></svg><span>Dashboard</span></a>",
+      "css": ".ds-nav-active { display:flex; align-items:center; gap:11px; min-height:44px; padding:11px 12px; border-radius:var(--radius-sm,10px); color:var(--graphite-ink,#19152f); background:var(--instrument-cream,#fff9ec); font:800 13px/1.2 var(--font-body,Manrope,sans-serif); box-shadow:0 5px 0 rgba(13,7,52,.22),0 12px 22px rgba(15,7,55,.24); text-decoration:none; } .ds-nav-active svg { width:19px; color:var(--studio-violet,#5b37f2); } .ds-nav-active:hover { transform:translateX(2px); } .ds-nav-active:focus-visible { outline:3px solid var(--signal-cyan,#3ad9ee); outline-offset:3px; }"
+    },
+    {
+      "name": "Technical Stage",
+      "kind": "card",
+      "refersTo": "technical-stage",
+      "description": "A dark mounted canvas for dense Progress, Bump, timeline, or audit evidence.",
+      "html": "<section class=\"ds-technical\"><span>Effective update · oldest first</span><h3>Latest Progress</h3><div>DEMO-021 · Records search upgrade · 0d 8h</div></section>",
+      "css": ".ds-technical { display:grid; gap:10px; padding:16px; border-radius:var(--radius-lg,18px); color:#f7f4ff; background:var(--technical-plum,#17132f); box-shadow:0 8px 0 #cfc2ad,0 20px 36px rgba(29,20,55,.18); font:400 14px/1.55 var(--font-body,Manrope,sans-serif); } .ds-technical span { color:#bdb4e3; font-size:10px; font-weight:850; letter-spacing:.08em; text-transform:uppercase; } .ds-technical h3 { margin:0; font:800 20px/1.05 var(--font-display,'Bricolage Grotesque',sans-serif); letter-spacing:-.025em; } .ds-technical div { padding:12px; border-radius:var(--radius-md,14px); background:var(--technical-raised,#24204a); }"
+    },
+    {
+      "name": "KRA Instrument",
+      "kind": "card",
+      "description": "A regular, softly rounded KPI definition panel with no novelty silhouette.",
+      "html": "<section class=\"ds-kra\"><h3>Project Safety</h3><strong>Change Control Stability</strong><small>Stable below 10%</small><em>● Not yet calculated</em></section>",
+      "css": ".ds-kra { display:grid; gap:8px; min-height:190px; padding:16px; border-radius:var(--radius-lg,18px); color:var(--graphite-ink,#19152f); background:#e8f7e4; box-shadow:0 6px 0 #cde5c8,0 15px 28px rgba(34,65,37,.09); font:400 12px/1.4 var(--font-body,Manrope,sans-serif); } .ds-kra h3 { margin:0 0 6px; font:800 16px/1.05 var(--font-display,'Bricolage Grotesque',sans-serif); } .ds-kra small { color:var(--muted-ink,#665f78); } .ds-kra em { align-self:end; width:max-content; margin-top:auto; padding:5px 9px; border-radius:999px; color:#594514; background:#fff0a9; font-style:normal; font-weight:800; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Kinetic Project Studio",
+    "overview": "PMO Tracker is a glamorous working studio for serious portfolio stewardship. It combines the confidence of beautifully art-directed software with the physical delight of a model shop: luminous color fields, creamy instrument panels, deep technical canvases, friendly oversized type, tiny categorical badges, and a small family of original three-dimensional project objects. The result is whimsical and cute without becoming juvenile, and operational without becoming anonymous.\n\nThe interface always keeps accountability ahead of spectacle. Current ownership, Stage, State, age, and next action remain readable without interpreting an illustration. Dimensional objects create recognition and reward around the product’s unique language; they never become a parallel icon system for ordinary navigation or status.",
+    "keyCharacteristics": [
+      "Saturated, atmospheric application framing with pale working surfaces and dark technical stages.",
+      "Exceptional typographic scale contrast: expressive headlines, compact operational copy, and precise tabular data.",
+      "Original soft 3D objects used sparingly for product concepts, orientation, and memorable state changes.",
+      "Tactile controls with explicit labels, small badges, and purposeful spring-like motion.",
+      "Dense records that remain calm, aligned, and familiar even when the surrounding world is exuberant."
+    ],
+    "rules": [
+      {
+        "name": "The Delight Serves Duty Rule",
+        "body": "A playful device earns its place only when it improves orientation, recognition, feedback, or recall.",
+        "section": "overview"
+      },
+      {
+        "name": "The Original Object Rule",
+        "body": "The dimensional Ball and Bump artwork must be authored for PMO Tracker. Do not reuse Charm characters, emoji, stock clip art, or third-party mascots.",
+        "section": "overview"
+      },
+      {
+        "name": "The Field, Not Confetti Rule",
+        "body": "Violet should own coherent regions; do not sprinkle every accent color across white cards.",
+        "section": "colors"
+      },
+      {
+        "name": "The Written Status Rule",
+        "body": "Color never communicates ownership group, warning, success, priority, or State without a visible label.",
+        "section": "colors"
+      },
+      {
+        "name": "The Type Does the Smiling Rule",
+        "body": "Friendly lettering supplies everyday charm; illustrations do not need to decorate every panel.",
+        "section": "typography"
+      },
+      {
+        "name": "The Two-Second Scan Rule",
+        "body": "Project, owner, Stage, and age must form a stable typographic rhythm across every dense list.",
+        "section": "typography"
+      },
+      {
+        "name": "The Work Starts Above the Fold Rule",
+        "body": "On the Dashboard, at least one actionable queue or oldest-waiting record must be visible in the first viewport.",
+        "section": "layout"
+      },
+      {
+        "name": "The Plain Vessel Rule",
+        "body": "Containers stay geometrically quiet so typography, 3D objects, color, and motion can carry the whimsy.",
+        "section": "layout"
+      },
+      {
+        "name": "The One Impossible Object Rule",
+        "body": "Each major surface may feature one dominant dimensional object or object group. Supporting data remains materially quieter.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do make the Ball the clearest recurring expression of accountability across Dashboard, Ball View, Project details, and transfer feedback.",
+      "Do give Bump a memorable dimensional fist motif while keeping the action’s conversational meaning explicit.",
+      "Do use expressive type and authored spacing before adding more illustration.",
+      "Do reserve full 3D rendering for signature concepts, onboarding, empty states, and important transitions.",
+      "Do use clean rectangular or softly rounded KRA/KPI panels with strong typography and disciplined spacing.",
+      "Do keep motion short, interruptible, and removable through prefers-reduced-motion.",
+      "Do label all timestamps in PHT or Asia/Manila and preserve persistent field labels and visible focus."
+    ],
+    "donts": [
+      "Don't recreate Charm’s characters, layouts, logos, product cards, or exact visual assets; match the craft and exuberance, not the identity.",
+      "Don't return to pixel art, graph-paper stationery, blocky two-pixel outlines, or the old pastel ledger treatment.",
+      "Don't turn the Dashboard into a landing page with operational work below a decorative hero.",
+      "Don't animate every object, loop the Ball continuously, or let motion compete with scanning.",
+      "Don't use emoji basketballs or fist emoji as shipped artwork.",
+      "Don't soften every surface into rounded white cards on a pale background; maintain the violet field, cream instruments, and dark technical stages.",
+      "Don't use skewed, clipped, polygonal, or novelty-shaped cards for Project Efficiency, Project Safety, Project Governance, or other routine information."
+    ]
+  }
+}

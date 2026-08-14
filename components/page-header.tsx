@@ -10,7 +10,7 @@ export function PageHeader({
 }) {
   return (
     <header className="page-header">
-      <div>
+      <div className="page-heading-copy">
         <h1>{title}</h1>
         <p>{description}</p>
       </div>
