@@ -8,7 +8,7 @@ create table public.departments (
 create table public.people (
   id uuid primary key default gen_random_uuid(),
   name text not null,
-  department_id uuid not null references public.departments (id),
+  department_id uuid not null references public.departments (id) on delete restrict,
   username extensions.citext not null unique,
   position text not null,
   active boolean not null default true,
@@ -18,7 +18,7 @@ create table public.people (
 
 create table public.profiles (
   id uuid primary key references auth.users (id) on delete cascade,
-  person_id uuid not null unique references public.people (id),
+  person_id uuid not null unique references public.people (id) on delete restrict,
   active boolean not null default true,
   created_at timestamptz not null default now()
 );
@@ -38,39 +38,65 @@ create table public.systems (
 
 create table public.modules (
   id uuid primary key default gen_random_uuid(),
-  system_id uuid not null references public.systems (id),
+  system_id uuid not null references public.systems (id) on delete restrict,
   name text not null,
   active boolean not null default true,
-  unique (system_id, name)
+  unique (system_id, name),
+  unique (id, system_id)
 );
 
 create table public.system_developer_assignments (
   id uuid primary key default gen_random_uuid(),
-  system_id uuid not null references public.systems (id),
-  person_id uuid not null references public.people (id),
+  system_id uuid not null references public.systems (id) on delete restrict,
+  person_id uuid not null references public.people (id) on delete restrict,
   effective_from timestamptz not null,
   effective_to timestamptz,
   constraint system_developer_assignment_dates
-    check (effective_to is null or effective_to > effective_from)
+    check (effective_to is null or effective_to > effective_from),
+  constraint system_developer_assignments_no_overlap
+    exclude using gist (
+      system_id with =,
+      person_id with =,
+      tstzrange(effective_from, effective_to, '[)') with &&
+    )
 );
 
 create unique index one_current_developer_assignment
   on public.system_developer_assignments (system_id, person_id)
   where effective_to is null;
 
+create index system_developer_assignments_person_current_idx
+  on public.system_developer_assignments (person_id, system_id)
+  where effective_to is null;
+
+create index system_developer_assignments_system_history_idx
+  on public.system_developer_assignments (system_id, effective_from desc);
+
 create table public.module_owner_assignments (
   id uuid primary key default gen_random_uuid(),
-  module_id uuid not null references public.modules (id),
-  person_id uuid not null references public.people (id),
+  module_id uuid not null references public.modules (id) on delete restrict,
+  person_id uuid not null references public.people (id) on delete restrict,
   effective_from timestamptz not null,
   effective_to timestamptz,
   constraint module_owner_assignment_dates
-    check (effective_to is null or effective_to > effective_from)
+    check (effective_to is null or effective_to > effective_from),
+  constraint module_owner_assignments_no_overlap
+    exclude using gist (
+      module_id with =,
+      tstzrange(effective_from, effective_to, '[)') with &&
+    )
 );
 
 create unique index one_current_module_owner
   on public.module_owner_assignments (module_id)
   where effective_to is null;
+
+create index module_owner_assignments_person_current_idx
+  on public.module_owner_assignments (person_id, module_id)
+  where effective_to is null;
+
+create index module_owner_assignments_module_history_idx
+  on public.module_owner_assignments (module_id, effective_from desc);
 
 create table public.priorities (
   id uuid primary key default gen_random_uuid(),
@@ -114,6 +140,15 @@ create table public.initiatives (
   active boolean not null default true
 );
 
+create index people_department_idx on public.people (department_id);
+create index profile_roles_role_profile_idx
+  on public.profile_roles (role, profile_id);
+create index modules_system_active_idx
+  on public.modules (system_id, active, name);
+create index workflow_template_stages_active_order_idx
+  on public.workflow_template_stages (sort_order)
+  where active;
+
 comment on table public.departments is
   'Retireable organizational directory used by people and request snapshots.';
 comment on table public.people is
@@ -153,3 +188,9 @@ comment on index public.one_current_developer_assignment is
   'Prevents duplicate simultaneous assignments of the same developer to one system.';
 comment on index public.one_current_module_owner is
   'Enforces exactly zero or one current owner row per module.';
+comment on constraint system_developer_assignments_no_overlap
+  on public.system_developer_assignments is
+  'Prevents overlapping effective periods for the same developer and system.';
+comment on constraint module_owner_assignments_no_overlap
+  on public.module_owner_assignments is
+  'Prevents overlapping ownership periods for the same module.';

@@ -1,5 +1,6 @@
 create extension if not exists pgcrypto;
 create extension if not exists citext with schema extensions;
+create extension if not exists btree_gist with schema extensions;
 
 create type public.app_role as enum (
   'administrator',

@@ -2,7 +2,7 @@
 
 Status: Approved and in progress
 
-Progress: Tasks 1–2 completed on 2026-08-14. Task 3 is next.
+Progress: Tasks 1–3 completed on 2026-08-14. Task 4 is next.
 
 ## 1. Outcome
 
@@ -224,7 +224,7 @@ Verify:
 - A second reset produces the same schema and deterministic reference choices.
 - Supabase migration list shows only the intended local baseline.
 
-### Task 3: Harden relational invariants and indexes
+### Task 3: Harden relational invariants and indexes (complete)
 
 What:
 
