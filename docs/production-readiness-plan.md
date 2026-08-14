@@ -2,8 +2,8 @@
 
 Status: Approved and in progress
 
-Progress: Tasks 1–7 and 10 completed on 2026-08-14. Tasks 8–9 await the
-hosted-project gate; Task 11 is next locally.
+Progress: Tasks 1–7 and 10–11 completed on 2026-08-14. Tasks 8–9 await the
+hosted-project gate; Task 12 is next locally.
 
 ## 1. Outcome
 
@@ -438,7 +438,7 @@ Verify:
 - Client bundles contain no service-role key.
 - Auth cookies refresh through the request boundary.
 
-### Task 11: Enforce authentication and session lifecycle
+### Task 11: Enforce authentication and session lifecycle (complete)
 
 What:
 

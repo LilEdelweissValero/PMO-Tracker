@@ -1,9 +1,17 @@
 import { csv } from "@/lib/csv";
 import { demoProjects } from "@/lib/demo";
+import { sessionState } from "@/lib/auth";
 export async function GET(
   _request: Request,
   { params }: { params: Promise<{ report: string }> },
 ) {
+  const auth = await sessionState();
+  if (auth.kind === "anonymous") {
+    return Response.json({ error: "Authentication required" }, { status: 401 });
+  }
+  if (auth.kind === "inactive") {
+    return Response.json({ error: "Active profile required" }, { status: 403 });
+  }
   const { report } = await params;
   let rows: Record<string, unknown>[];
   if (report === "turnaround")

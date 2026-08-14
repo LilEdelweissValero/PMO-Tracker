@@ -1,11 +1,17 @@
+import { redirect } from "next/navigation";
 import { login } from "./actions";
 import { SparkIcon } from "@/components/icons";
+import { safeReturnPath, sessionState } from "@/lib/auth";
 export default async function Login({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; returnTo?: string }>;
 }) {
-  const { error } = await searchParams;
+  const { error, returnTo: requestedReturnPath } = await searchParams;
+  const returnTo = safeReturnPath(requestedReturnPath ?? null);
+  const state = await sessionState();
+  if (state.kind === "active") redirect(returnTo);
+  if (state.kind === "inactive") redirect("/permission-denied");
   return (
     <main className="login-page">
       <div className="login-atmosphere" aria-hidden="true">
@@ -13,6 +19,7 @@ export default async function Login({
         <span className="login-orb login-orb-two" />
       </div>
       <form action={login} className="login-card">
+        <input type="hidden" name="returnTo" value={returnTo} />
         <div className="brand login-brand">
           <span className="brand-mark">
             <SparkIcon />

@@ -8,6 +8,7 @@ import { readServerEnvironment } from "./lib/env";
 const projectRoot = import.meta.dirname;
 
 const config: NextConfig = {
+  allowedDevOrigins: ["127.0.0.1"],
   experimental: {
     useTypeScriptCli: false,
   },

@@ -1,8 +1,16 @@
 import { csv } from "@/lib/csv";
+import { sessionState } from "@/lib/auth";
 export async function GET(
   _request: Request,
   { params }: { params: Promise<{ code: string }> },
 ) {
+  const auth = await sessionState();
+  if (auth.kind === "anonymous") {
+    return Response.json({ error: "Authentication required" }, { status: 401 });
+  }
+  if (auth.kind === "inactive") {
+    return Response.json({ error: "Active profile required" }, { status: 403 });
+  }
   const { code } = await params;
   const rows = [
     {

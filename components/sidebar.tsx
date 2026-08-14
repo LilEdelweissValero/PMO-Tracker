@@ -11,6 +11,8 @@ import {
   IconLogout,
 } from "@tabler/icons-react";
 import { BallIcon, SparkIcon } from "./icons";
+import type { ActiveSession } from "@/lib/auth";
+import { logout } from "@/app/login/actions";
 const nav = [
   ["/dashboard", "Dashboard", IconLayoutDashboard],
   ["/projects", "Projects", IconFolders],
@@ -19,8 +21,20 @@ const nav = [
   ["/directory/people", "Directory", IconUsers],
   ["/admin/workflow", "Administration", IconSettings],
 ] as const;
-export function Sidebar() {
+const roleLabels = {
+  administrator: "Administrator",
+  pmo_officer: "PMO Officer",
+  leadership_viewer: "Leadership Viewer",
+} as const;
+
+export function Sidebar({ session }: { session: ActiveSession }) {
   const pathname = usePathname();
+  const initials = session.personName
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
 
   return (
     <aside className="sidebar">
@@ -53,15 +67,19 @@ export function Sidebar() {
       </nav>
       <div className="sidebar-foot">
         <span className="avatar" aria-hidden="true">
-          AR
+          {initials}
         </span>
         <span>
-          <b>Ana Reyes</b>
-          <small>Administrator</small>
+          <b>{session.personName}</b>
+          <small>
+            {session.roles.map((role) => roleLabels[role]).join(" · ")}
+          </small>
         </span>
-        <Link href="/login" aria-label="Log out">
-          <IconLogout size={18} />
-        </Link>
+        <form action={logout}>
+          <button type="submit" aria-label="Log out">
+            <IconLogout size={18} />
+          </button>
+        </form>
       </div>
     </aside>
   );

@@ -295,6 +295,20 @@ textarea:focus-visible {
   font-size: 9px;
 }
 
+.sidebar-foot form {
+  margin: 0;
+}
+
+.sidebar-foot button {
+  display: grid;
+  place-items: center;
+  padding: 6px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
 .avatar {
   display: grid;
   place-items: center;
@@ -1602,7 +1616,7 @@ textarea:focus-visible {
   .sidebar .brand > span:last-child,
   .sidebar nav span,
   .sidebar-foot span:not(.avatar),
-  .sidebar-foot > a {
+  .sidebar-foot > form {
     display: none;
   }
 

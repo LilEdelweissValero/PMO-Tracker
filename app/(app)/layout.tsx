@@ -1,10 +1,16 @@
 import { Sidebar } from "@/components/sidebar";
 import { isDemo } from "@/lib/demo";
+import { requireSession } from "@/lib/auth";
 export const dynamic = "force-dynamic";
-export default function AppLayout({ children }: { children: React.ReactNode }) {
+export default async function AppLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const activeSession = await requireSession();
   return (
     <div className="app-shell">
-      <Sidebar />
+      <Sidebar session={activeSession} />
       <main className="main">
         {isDemo && (
           <div className="notice">

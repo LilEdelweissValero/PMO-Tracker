@@ -5,7 +5,13 @@ import { getPublicEnvironment } from "@/lib/env";
 
 export async function refreshSession(request: NextRequest) {
   const environment = getPublicEnvironment();
-  if (environment.demoMode) return NextResponse.next({ request });
+  if (environment.demoMode) {
+    return {
+      response: NextResponse.next({ request }),
+      userId: "demo",
+      demoMode: true,
+    } as const;
+  }
 
   let response = NextResponse.next({ request });
   const supabase = createServerClient<Database>(
@@ -28,6 +34,10 @@ export async function refreshSession(request: NextRequest) {
     },
   );
 
-  await supabase.auth.getClaims();
-  return response;
+  const { data } = await supabase.auth.getClaims();
+  return {
+    response,
+    userId: data?.claims.sub ?? null,
+    demoMode: false,
+  } as const;
 }
