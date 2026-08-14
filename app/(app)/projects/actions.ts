@@ -1,9 +1,13 @@
 "use server";
-import { projectSchema } from "@/lib/validation";
-import { createProject } from "@/lib/actions/project-commands";
+import { appendProjectEventInputSchema, projectSchema } from "@/lib/validation";
+import {
+  appendProjectEvent,
+  createProject,
+} from "@/lib/actions/project-commands";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { isDemoPreview } from "@/lib/demo";
+import type { Json } from "@/lib/database.types";
 export async function createProjectAction(data: FormData) {
   const parsed = projectSchema.safeParse(Object.fromEntries(data));
   if (!parsed.success) throw new Error(parsed.error.issues[0]?.message);
@@ -31,4 +35,61 @@ export async function createProjectAction(data: FormData) {
   }
   revalidatePath("/projects");
   redirect(`/projects/${encodeURIComponent(parsed.data.code)}`);
+}
+
+async function appendEventFromForm(
+  data: FormData,
+  event:
+    | { eventType: "progress"; stageId: string; payload: { summary: string } }
+    | { eventType: "bump"; payload: { text: string } }
+    | {
+        eventType: "state_changed";
+        resultingState: string;
+        payload: { reason?: string };
+      },
+) {
+  const code = String(data.get("code") ?? "");
+  if (await isDemoPreview()) redirect(`/projects/${encodeURIComponent(code)}`);
+  const candidate = {
+    projectId: String(data.get("projectId") ?? ""),
+    version: data.get("version"),
+    effectiveAt: new Date().toISOString(),
+    resultingBallOwnerId: String(data.get("ballOwnerId") ?? ""),
+    ...event,
+  };
+  const parsed = appendProjectEventInputSchema.safeParse(candidate);
+  if (!parsed.success) throw new Error(parsed.error.issues[0]?.message);
+  const result = await appendProjectEvent(parsed.data as unknown as Json);
+  if (result.status !== "success") {
+    throw new Error(
+      "issue" in result ? result.issue.message : "Project update failed.",
+    );
+  }
+  revalidatePath(`/projects/${encodeURIComponent(code)}`);
+  revalidatePath("/dashboard");
+  revalidatePath("/ball");
+  redirect(`/projects/${encodeURIComponent(code)}`);
+}
+
+export async function addProgressAction(data: FormData) {
+  return appendEventFromForm(data, {
+    eventType: "progress",
+    stageId: String(data.get("stageId") ?? ""),
+    payload: { summary: String(data.get("summary") ?? "") },
+  });
+}
+
+export async function addBumpAction(data: FormData) {
+  return appendEventFromForm(data, {
+    eventType: "bump",
+    payload: { text: String(data.get("text") ?? "") },
+  });
+}
+
+export async function changeStateAction(data: FormData) {
+  return appendEventFromForm(data, {
+    eventType: "state_changed",
+    resultingState: String(data.get("resultingState") ?? ""),
+    payload: { reason: String(data.get("reason") ?? "") || undefined },
+  });
 }

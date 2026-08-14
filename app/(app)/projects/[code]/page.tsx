@@ -6,6 +6,11 @@ import { getProjectByCode } from "@/lib/data/projects";
 import { listProjectHistory } from "@/lib/data/events";
 import { formatPhilippine } from "@/lib/time";
 import { PageHeader } from "@/components/page-header";
+import {
+  addBumpAction,
+  addProgressAction,
+  changeStateAction,
+} from "../actions";
 export default async function Workspace({
   params,
 }: {
@@ -80,12 +85,126 @@ export default async function Workspace({
         </div>
       </div>
       <div className="page-actions project-actions">
-        <button className="pink">Add Progress</button>
-        <button className="secondary">
-          <Image src="/assets/fist.png" alt="" width={34} height={34} />
-          Add Bump
-        </button>
-        <button className="secondary">Change State</button>
+        <details>
+          <summary className="button pink">Add Progress</summary>
+          <form action={addProgressAction} className="action-popover">
+            <input
+              type="hidden"
+              name="projectId"
+              value={workspace?.id ?? "00000000-0000-4000-8000-000000000021"}
+            />
+            <input
+              type="hidden"
+              name="version"
+              value={workspace?.version ?? 0}
+            />
+            <input
+              type="hidden"
+              name="ballOwnerId"
+              value={
+                workspace?.ball_owner_id ??
+                "00000000-0000-0000-0000-000000000002"
+              }
+            />
+            <input type="hidden" name="code" value={p.code} />
+            <label htmlFor="progress-stage">Stage</label>
+            <select id="progress-stage" name="stageId" required>
+              {demoPreview && (
+                <option value="00000000-0000-4000-8000-000000000031">
+                  {p.stage}
+                </option>
+              )}
+              {(workspace?.project_stages ?? [])
+                .filter((stage) => stage.active)
+                .map((stage) => (
+                  <option value={stage.id} key={stage.id}>
+                    {stage.name}
+                  </option>
+                ))}
+            </select>
+            <label htmlFor="progress-summary">Progress summary</label>
+            <textarea
+              id="progress-summary"
+              name="summary"
+              required
+              maxLength={4000}
+            />
+            <button
+              disabled={!demoPreview && !workspace?.project_stages.length}
+            >
+              Save Progress
+            </button>
+          </form>
+        </details>
+        <details>
+          <summary className="button secondary">
+            <Image src="/assets/fist.png" alt="" width={34} height={34} />
+            Add Bump
+          </summary>
+          <form action={addBumpAction} className="action-popover">
+            <input
+              type="hidden"
+              name="projectId"
+              value={workspace?.id ?? "00000000-0000-4000-8000-000000000021"}
+            />
+            <input
+              type="hidden"
+              name="version"
+              value={workspace?.version ?? 0}
+            />
+            <input
+              type="hidden"
+              name="ballOwnerId"
+              value={
+                workspace?.ball_owner_id ??
+                "00000000-0000-0000-0000-000000000002"
+              }
+            />
+            <input type="hidden" name="code" value={p.code} />
+            <label htmlFor="bump-text">Conversation note</label>
+            <textarea id="bump-text" name="text" required maxLength={4000} />
+            <button>Save Bump</button>
+          </form>
+        </details>
+        <details>
+          <summary className="button secondary">Change State</summary>
+          <form action={changeStateAction} className="action-popover">
+            <input
+              type="hidden"
+              name="projectId"
+              value={workspace?.id ?? "00000000-0000-4000-8000-000000000021"}
+            />
+            <input
+              type="hidden"
+              name="version"
+              value={workspace?.version ?? 0}
+            />
+            <input
+              type="hidden"
+              name="ballOwnerId"
+              value={
+                workspace?.ball_owner_id ??
+                "00000000-0000-0000-0000-000000000002"
+              }
+            />
+            <input type="hidden" name="code" value={p.code} />
+            <label htmlFor="resulting-state">New state</label>
+            <select
+              id="resulting-state"
+              name="resultingState"
+              defaultValue={p.state}
+            >
+              <option>Pipeline</option>
+              <option>Planned</option>
+              <option>Active</option>
+              <option>On Hold</option>
+              <option>Cancelled</option>
+            </select>
+            <label htmlFor="state-reason">Reason</label>
+            <textarea id="state-reason" name="reason" maxLength={4000} />
+            <button>Change State</button>
+          </form>
+        </details>
       </div>
       <nav className="tabs" aria-label="Project sections">
         <a href="#overview">Overview</a>

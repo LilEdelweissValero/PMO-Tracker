@@ -243,6 +243,16 @@ test("Administrator creates a live Pipeline Project", async ({ page }) => {
     page.getByRole("heading", { name: "Browser-created Project" }),
   ).toBeVisible();
   await expect(page.getByText("Pipeline", { exact: true }).first()).toBeVisible();
+
+  await page.locator("details").filter({ hasText: "Add Bump" }).locator("summary").click();
+  await page.getByLabel("Conversation note").fill("Browser-tested handoff note");
+  await page.getByRole("button", { name: "Save Bump" }).click();
+  await expect(page.getByText("bump", { exact: true })).toBeVisible();
+
+  await page.locator("details").filter({ hasText: "Add Progress" }).locator("summary").click();
+  await page.getByLabel("Progress summary").fill("Browser-tested progress update");
+  await page.getByRole("button", { name: "Save Progress" }).click();
+  await expect(page.getByText("progress", { exact: true })).toBeVisible();
 });
 
 test("a simulated Profile failure leaves no orphan Auth user", async () => {
