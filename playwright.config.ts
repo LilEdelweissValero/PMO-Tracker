@@ -32,7 +32,10 @@ function localSupabaseEnvironment() {
 }
 
 const environment = localSupabaseEnvironment();
-const webServerEnvironment: Record<string, string> = { ...environment };
+const webServerEnvironment: Record<string, string> = {
+  ...environment,
+  PMO_NEXT_DIST_DIR: ".next-playwright",
+};
 for (const [name, value] of Object.entries(process.env)) {
   if (name !== "NO_COLOR" && value !== undefined) {
     webServerEnvironment[name] = value;

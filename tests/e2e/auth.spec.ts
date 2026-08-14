@@ -165,6 +165,25 @@ test("unsafe return paths fall back to the Dashboard", async ({ page }) => {
   await expect(page).toHaveURL(/\/login\?returnTo=%2Fdashboard$/);
 });
 
+test("a signed-in user can enter and leave demo preview", async ({ page }) => {
+  await page.goto("/login?returnTo=%2Fdashboard");
+  await page.getByLabel("Email").fill(activeEmail);
+  await page.getByLabel("Password").fill(password);
+  await page.getByRole("button", { name: "Sign in" }).click();
+  await expect(page).toHaveURL(/\/dashboard$/);
+
+  const toggle = page.getByRole("switch", { name: "Toggle demo preview" });
+  await expect(toggle).toHaveAttribute("aria-checked", "false");
+  await toggle.click();
+  await expect(page.getByText("Demo preview", { exact: true })).toBeVisible();
+  await expect(toggle).toHaveAttribute("aria-checked", "true");
+  await expect(page.getByText("DEMO-014").first()).toBeVisible();
+
+  await toggle.click();
+  await expect(toggle).toHaveAttribute("aria-checked", "false");
+  await expect(page.getByText("Browser Test Administrator")).toBeVisible();
+});
+
 test("Administrator provisions an account and cannot remove the last Administrator", async ({
   page,
 }) => {

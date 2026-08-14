@@ -1,11 +1,15 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "@/lib/database.types";
+import { DEMO_PREVIEW_COOKIE } from "@/lib/demo-constants";
 import { getPublicEnvironment } from "@/lib/env";
 
 export async function refreshSession(request: NextRequest) {
   const environment = getPublicEnvironment();
-  if (environment.demoMode) {
+  if (
+    environment.demoMode ||
+    request.cookies.get(DEMO_PREVIEW_COOKIE)?.value === "1"
+  ) {
     return {
       response: NextResponse.next({ request }),
       userId: "demo",

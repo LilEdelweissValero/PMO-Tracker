@@ -7,7 +7,7 @@ import {
   provisionProfile,
 } from "@/lib/actions/access-commands";
 import { requireAnyRole } from "@/lib/auth";
-import { isDemo } from "@/lib/demo";
+import { isDemoPreview } from "@/lib/demo";
 import {
   provisionApplicationAccount,
   ProvisioningCompensationError,
@@ -48,7 +48,7 @@ export async function provisionAccountAction(
   formData: FormData,
 ): Promise<AccessActionState> {
   await requireAnyRole(["administrator"]);
-  if (isDemo) {
+  if (await isDemoPreview()) {
     return {
       status: "error",
       message: "Changes are disabled in demo preview.",
@@ -130,7 +130,7 @@ export async function manageAccountAction(
   formData: FormData,
 ): Promise<AccessActionState> {
   await requireAnyRole(["administrator"]);
-  if (isDemo) {
+  if (await isDemoPreview()) {
     return {
       status: "error",
       message: "Changes are disabled in demo preview.",

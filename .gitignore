@@ -1,5 +1,6 @@
 node_modules
 .next
+.next-playwright
 .env*
 !.env.example
 coverage

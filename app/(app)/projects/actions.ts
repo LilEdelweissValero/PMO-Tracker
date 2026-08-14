@@ -3,11 +3,13 @@ import { projectSchema } from "@/lib/validation";
 import { createProject } from "@/lib/actions/project-commands";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { isDemo } from "@/lib/demo";
+import { isDemoPreview } from "@/lib/demo";
 export async function createProjectAction(data: FormData) {
   const parsed = projectSchema.safeParse(Object.fromEntries(data));
   if (!parsed.success) throw new Error(parsed.error.issues[0]?.message);
-  if (isDemo) redirect(`/projects/${encodeURIComponent(parsed.data.code)}`);
+  if (await isDemoPreview()) {
+    redirect(`/projects/${encodeURIComponent(parsed.data.code)}`);
+  }
   const result = await createProject({
     code: parsed.data.code,
     name: parsed.data.name,

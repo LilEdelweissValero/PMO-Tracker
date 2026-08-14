@@ -1,3 +1,8 @@
+import { cookies } from "next/headers";
+import { cache } from "react";
+import { DEMO_PREVIEW_COOKIE } from "./demo-constants";
+import { getPublicEnvironment } from "./env";
+
 export type ProjectRow = {
   code: string;
   name: string;
@@ -50,5 +55,11 @@ export const demoProjects: ProjectRow[] = [
     pmo: "Ana Reyes",
   },
 ];
-export const isDemo = getPublicEnvironment().demoMode;
-import { getPublicEnvironment } from "./env";
+
+export { DEMO_PREVIEW_COOKIE } from "./demo-constants";
+export const demoRequired = getPublicEnvironment().demoMode;
+export const isDemoPreview = cache(async () => {
+  if (demoRequired) return true;
+  const store = await cookies();
+  return store.get(DEMO_PREVIEW_COOKIE)?.value === "1";
+});

@@ -3,7 +3,7 @@ import "server-only";
 import { cache } from "react";
 import { redirect } from "next/navigation";
 import { getProfileForUser } from "./data/session";
-import { isDemo } from "./demo";
+import { isDemoPreview } from "./demo";
 import { createClient } from "./supabase/server";
 export { safeReturnPath } from "./auth-paths";
 
@@ -31,7 +31,7 @@ const demoSession: ActiveSession = {
 };
 
 const loadSessionState = async (): Promise<SessionState> => {
-  if (isDemo) return demoSession;
+  if (await isDemoPreview()) return demoSession;
 
   const supabase = await createClient();
   const { data: claimsData, error: claimsError } =

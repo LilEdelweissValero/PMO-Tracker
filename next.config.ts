@@ -8,6 +8,7 @@ import { readServerEnvironment } from "./lib/env";
 const projectRoot = import.meta.dirname;
 
 const config: NextConfig = {
+  distDir: process.env.PMO_NEXT_DIST_DIR ?? ".next",
   allowedDevOrigins: ["127.0.0.1"],
   experimental: {
     useTypeScriptCli: false,

@@ -1,13 +1,13 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { isDemo } from "@/lib/demo";
+import { demoRequired, isDemoPreview } from "@/lib/demo";
 import { safeReturnPath } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 
 export async function login(formData: FormData) {
   const returnTo = safeReturnPath(formData.get("returnTo"));
-  if (isDemo) redirect(returnTo);
+  if (await isDemoPreview()) redirect(returnTo);
 
   const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");
@@ -28,7 +28,7 @@ export async function login(formData: FormData) {
 }
 
 export async function logout() {
-  if (!isDemo) {
+  if (!demoRequired) {
     const supabase = await createClient();
     await supabase.auth.signOut();
   }

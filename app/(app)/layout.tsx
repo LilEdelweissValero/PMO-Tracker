@@ -1,5 +1,5 @@
 import { Sidebar } from "@/components/sidebar";
-import { isDemo } from "@/lib/demo";
+import { demoRequired, isDemoPreview } from "@/lib/demo";
 import { requireSession } from "@/lib/auth";
 export const dynamic = "force-dynamic";
 export default async function AppLayout({
@@ -7,12 +7,19 @@ export default async function AppLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const activeSession = await requireSession();
+  const [activeSession, demoPreview] = await Promise.all([
+    requireSession(),
+    isDemoPreview(),
+  ]);
   return (
     <div className="app-shell">
-      <Sidebar session={activeSession} />
+      <Sidebar
+        session={activeSession}
+        demoPreview={demoPreview}
+        demoRequired={demoRequired}
+      />
       <main className="main">
-        {isDemo && (
+        {demoPreview && (
           <div className="notice">
             <strong>Demo preview</strong> Connect Supabase to use authenticated
             live data. All sample records are clearly labeled.

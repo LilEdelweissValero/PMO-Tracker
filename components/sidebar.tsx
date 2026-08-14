@@ -13,6 +13,7 @@ import {
 import { BallIcon, SparkIcon } from "./icons";
 import type { ActiveSession } from "@/lib/auth";
 import { logout } from "@/app/login/actions";
+import { DemoPreviewToggle } from "./demo-preview-toggle";
 const nav = [
   ["/dashboard", "Dashboard", IconLayoutDashboard],
   ["/projects", "Projects", IconFolders],
@@ -27,7 +28,15 @@ const roleLabels = {
   leadership_viewer: "Leadership Viewer",
 } as const;
 
-export function Sidebar({ session }: { session: ActiveSession }) {
+export function Sidebar({
+  session,
+  demoPreview,
+  demoRequired,
+}: {
+  session: ActiveSession;
+  demoPreview: boolean;
+  demoRequired: boolean;
+}) {
   const pathname = usePathname();
   const initials = session.personName
     .split(/\s+/)
@@ -65,6 +74,7 @@ export function Sidebar({ session }: { session: ActiveSession }) {
           );
         })}
       </nav>
+      <DemoPreviewToggle enabled={demoPreview} required={demoRequired} />
       <div className="sidebar-foot">
         <span className="avatar" aria-hidden="true">
           {initials}

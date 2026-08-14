@@ -2,7 +2,7 @@ import { PageHeader } from "@/components/page-header";
 import { requireAnyRole, type Role } from "@/lib/auth";
 import { listUnlinkedActivePeople } from "@/lib/data/directory";
 import { listProfiles, type ProfileWithAccess } from "@/lib/data/session";
-import { isDemo } from "@/lib/demo";
+import { isDemoPreview } from "@/lib/demo";
 import { ManageAccessForm, ProvisionAccountForm } from "./access-forms";
 
 const roleLabels: Record<Role, string> = {
@@ -13,9 +13,10 @@ const roleLabels: Record<Role, string> = {
 
 export default async function Access() {
   await requireAnyRole(["administrator"]);
+  const demoPreview = await isDemoPreview();
   let accounts: ProfileWithAccess[];
   let availablePeople: { id: string; name: string; position: string }[];
-  if (isDemo) {
+  if (demoPreview) {
     accounts = [
       {
         id: "00000000-0000-4000-8000-000000000001",
@@ -73,7 +74,7 @@ export default async function Access() {
             Every active directory Person already has an application account.
           </div>
         ) : null}
-        <ProvisionAccountForm people={availablePeople} disabled={isDemo} />
+        <ProvisionAccountForm people={availablePeople} disabled={demoPreview} />
       </section>
 
       <section className="section">
@@ -125,7 +126,7 @@ export default async function Access() {
                           profileId={account.id}
                           active={account.active}
                           roles={accountRoles}
-                          disabled={isDemo}
+                          disabled={demoPreview}
                         />
                       </details>
                     </td>
