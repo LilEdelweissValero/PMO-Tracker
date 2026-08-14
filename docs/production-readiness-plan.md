@@ -2,7 +2,7 @@
 
 Status: Approved and in progress
 
-Progress: Tasks 1–3 completed on 2026-08-14. Task 4 is next.
+Progress: Tasks 1–4 completed on 2026-08-14. Task 5 is next.
 
 ## 1. Outcome
 
@@ -247,7 +247,7 @@ Verify:
 - Query plans use indexes for role checks, dashboard queues, project history,
   and ownership lookups.
 
-### Task 4: Implement least-privilege RLS and grants
+### Task 4: Implement least-privilege RLS and grants (complete)
 
 What:
 

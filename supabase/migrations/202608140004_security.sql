@@ -1,3 +1,20 @@
+create function public.has_active_profile()
+returns boolean
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select exists (
+    select 1
+    from public.profiles as profile
+    join public.people as person on person.id = profile.person_id
+    where profile.id = (select auth.uid())
+      and profile.active
+      and person.active
+  );
+$$;
+
 create function public.current_roles()
 returns public.app_role[]
 language sql
@@ -5,11 +22,13 @@ stable
 security definer
 set search_path = ''
 as $$
-  select coalesce(array_agg(pr.role), '{}'::public.app_role[])
-  from public.profile_roles as pr
-  join public.profiles as p on p.id = pr.profile_id
-  where pr.profile_id = (select auth.uid())
-    and p.active;
+  select coalesce(array_agg(profile_role.role), '{}'::public.app_role[])
+  from public.profile_roles as profile_role
+  join public.profiles as profile on profile.id = profile_role.profile_id
+  join public.people as person on person.id = profile.person_id
+  where profile_role.profile_id = (select auth.uid())
+    and profile.active
+    and person.active;
 $$;
 
 create function public.is_admin()
@@ -22,7 +41,7 @@ as $$
   select 'administrator'::public.app_role = any(public.current_roles());
 $$;
 
-create function public.can_edit_project(project_id uuid)
+create function public.can_edit_project(target_project_id uuid)
 returns boolean
 language sql
 stable
@@ -32,17 +51,32 @@ as $$
   select public.is_admin()
     or exists (
       select 1
-      from public.projects as p
-      join public.profiles as pr on pr.person_id = p.pmo_officer_id
-      where p.id = project_id
-        and pr.id = (select auth.uid())
+      from public.projects as project
+      join public.project_pmo_assignments as assignment
+        on assignment.project_id = project.id
+       and assignment.person_id = project.pmo_officer_id
+       and assignment.effective_from <= transaction_timestamp()
+       and (
+         assignment.effective_to is null
+         or assignment.effective_to > transaction_timestamp()
+       )
+      join public.profiles as profile
+        on profile.person_id = assignment.person_id
+       and profile.id = (select auth.uid())
+       and profile.active
+      join public.people as person
+        on person.id = assignment.person_id
+       and person.active
+      where project.id = target_project_id
         and 'pmo_officer'::public.app_role = any(public.current_roles())
     );
 $$;
 
-revoke all on function public.current_roles() from public, anon;
-revoke all on function public.is_admin() from public, anon;
-revoke all on function public.can_edit_project(uuid) from public, anon;
+revoke create on schema public from public, anon, authenticated;
+grant usage on schema public to anon, authenticated, service_role;
+
+revoke execute on all functions in schema public from public, anon, authenticated;
+grant execute on function public.has_active_profile() to authenticated, service_role;
 grant execute on function public.current_roles() to authenticated, service_role;
 grant execute on function public.is_admin() to authenticated, service_role;
 grant execute on function public.can_edit_project(uuid) to authenticated, service_role;
@@ -97,29 +131,50 @@ begin
     'project_stages',
     'stage_plan_revisions',
     'closeout_assessments',
-    'project_events',
-    'audit_log'
+    'project_events'
   ]
   loop
     execute format(
-      'create policy authenticated_read on public.%I for select to authenticated using (exists (select 1 from public.profiles where id = (select auth.uid()) and active))',
+      'create policy active_profile_read on public.%I for select to authenticated using ((select public.has_active_profile()))',
       table_name
     );
   end loop;
 end;
 $$;
 
-create policy own_profile_read
+create policy own_or_administrator_profile_read
 on public.profiles
 for select
 to authenticated
-using (id = (select auth.uid()) or public.is_admin());
+using (
+  (
+    id = (select auth.uid())
+    and active
+    and exists (
+      select 1 from public.people
+      where id = person_id and active
+    )
+  )
+  or (select public.is_admin())
+);
 
-create policy own_roles_read
+create policy own_or_administrator_role_read
 on public.profile_roles
 for select
 to authenticated
-using (profile_id = (select auth.uid()) or public.is_admin());
+using (
+  (
+    profile_id = (select auth.uid())
+    and (select public.has_active_profile())
+  )
+  or (select public.is_admin())
+);
+
+create policy administrator_audit_read
+on public.audit_log
+for select
+to authenticated
+using ((select public.is_admin()));
 
 do $$
 declare
@@ -138,54 +193,87 @@ begin
     'initiator_types',
     'workflow_template_stages',
     'initiatives',
-    'profiles',
-    'profile_roles',
-    'audit_log'
+    'profiles'
   ]
   loop
     execute format(
-      'create policy admin_all on public.%I for all to authenticated using (public.is_admin()) with check (public.is_admin())',
+      'create policy administrator_insert on public.%I for insert to authenticated with check ((select public.is_admin()))',
+      table_name
+    );
+    execute format(
+      'create policy administrator_update on public.%I for update to authenticated using ((select public.is_admin())) with check ((select public.is_admin()))',
       table_name
     );
   end loop;
 end;
 $$;
 
-do $$
-declare
-  table_name text;
-  project_key text;
-begin
-  foreach table_name in array array[
-    'projects',
-    'project_pmo_assignments',
-    'project_system_scopes',
-    'project_participant_assignments',
-    'project_references',
-    'project_stages',
-    'stage_plan_revisions',
-    'closeout_assessments',
-    'project_events'
-  ]
-  loop
-    project_key := case when table_name = 'projects' then 'id' else 'project_id' end;
-    execute format(
-      'create policy project_editor_write on public.%I for all to authenticated using (public.can_edit_project(%I)) with check (public.can_edit_project(%I))',
-      table_name,
-      project_key,
-      project_key
-    );
-  end loop;
-end;
-$$;
+create policy administrator_role_insert
+on public.profile_roles
+for insert
+to authenticated
+with check ((select public.is_admin()));
 
-revoke all privileges on all tables in schema public from anon;
-grant select, insert, update, delete on all tables in schema public to authenticated;
+create policy administrator_role_delete
+on public.profile_roles
+for delete
+to authenticated
+using ((select public.is_admin()));
+
+revoke all privileges on all tables in schema public
+from public, anon, authenticated;
+
+grant select on table
+  public.departments,
+  public.people,
+  public.systems,
+  public.modules,
+  public.system_developer_assignments,
+  public.module_owner_assignments,
+  public.priorities,
+  public.request_types,
+  public.reference_types,
+  public.initiator_types,
+  public.workflow_template_stages,
+  public.initiatives,
+  public.projects,
+  public.project_pmo_assignments,
+  public.project_system_scopes,
+  public.project_participant_assignments,
+  public.project_references,
+  public.project_stages,
+  public.stage_plan_revisions,
+  public.closeout_assessments,
+  public.project_events,
+  public.profiles,
+  public.profile_roles,
+  public.audit_log
+to authenticated;
+
+grant insert, update on table
+  public.departments,
+  public.people,
+  public.systems,
+  public.modules,
+  public.system_developer_assignments,
+  public.module_owner_assignments,
+  public.priorities,
+  public.request_types,
+  public.reference_types,
+  public.initiator_types,
+  public.workflow_template_stages,
+  public.initiatives,
+  public.profiles
+to authenticated;
+
+grant insert, delete on table public.profile_roles to authenticated;
 grant all privileges on all tables in schema public to service_role;
 
+comment on function public.has_active_profile() is
+  'True only for an Auth user linked to active Profile and Person rows.';
 comment on function public.current_roles() is
-  'Returns roles for the active authenticated profile while bypassing RLS recursion.';
+  'Returns additive roles for the active authenticated Profile while bypassing RLS recursion.';
 comment on function public.is_admin() is
-  'True when the active authenticated profile has the Administrator role.';
+  'True when the active authenticated Profile has the Administrator role.';
 comment on function public.can_edit_project(uuid) is
-  'True for Administrators or the active PMO Officer assigned to the project.';
+  'True for Administrators or the active, currently assigned PMO Officer.';
