@@ -9,7 +9,7 @@ Release-one Next.js App Router application backed by Supabase Auth/Postgres. The
 3. Provision the first Auth user in Supabase, then link it to a `people` and `profiles` row and assign `profile_roles`. Public registration is disabled.
 4. Run `npm run dev`.
 
-Never expose `SUPABASE_SERVICE_ROLE_KEY` to the browser. Vercel environments must receive their own Supabase values and migrations must run before promotion.
+Never expose `SUPABASE_SECRET_KEY` (or legacy `SUPABASE_SERVICE_ROLE_KEY`) to the browser. Vercel environments must receive their own Supabase values and migrations must run before promotion.
 
 ## Verification
 

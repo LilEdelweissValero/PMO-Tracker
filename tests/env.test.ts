@@ -53,10 +53,17 @@ describe("environment validation", () => {
     ).toThrow(/placeholder/);
   });
 
-  it("requires the service-role key in production only", () => {
+  it("requires the server secret key in production only", () => {
     expect(() =>
       readServerEnvironment({ ...live, NODE_ENV: "production" }),
-    ).toThrow(/SUPABASE_SERVICE_ROLE_KEY/);
+    ).toThrow(/SUPABASE_SECRET_KEY/);
+    expect(
+      readServerEnvironment({
+        ...live,
+        NODE_ENV: "production",
+        SUPABASE_SECRET_KEY: "sb_secret_valid-test-key-123456",
+      }).demoMode,
+    ).toBe(false);
     expect(
       readServerEnvironment({ ...live, NODE_ENV: "development" }).demoMode,
     ).toBe(false);

@@ -269,6 +269,16 @@ test("Administrator creates a live Pipeline Project", async ({ page }) => {
     .fill("Browser-tested progress update");
   await page.getByRole("button", { name: "Save Progress" }).click();
   await expect(page.getByText("progress", { exact: true })).toBeVisible();
+
+  await page
+    .locator("details")
+    .filter({ hasText: "Change State" })
+    .locator("summary")
+    .click();
+  await page.getByLabel("New state").selectOption("On Hold");
+  await page.getByLabel("Reason").fill("Waiting for an external dependency.");
+  await page.getByRole("button", { name: "Change State" }).click();
+  await expect(page.getByText("state changed", { exact: true })).toBeVisible();
 });
 
 test("a simulated Profile failure leaves no orphan Auth user", async () => {

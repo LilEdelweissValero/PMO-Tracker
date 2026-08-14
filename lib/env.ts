@@ -80,7 +80,9 @@ export function readServerEnvironment(source: EnvironmentSource = process.env) {
   const publicEnvironment = readPublicEnvironment(source);
   if (publicEnvironment.demoMode) return publicEnvironment;
 
-  const serviceRoleKey = source.SUPABASE_SERVICE_ROLE_KEY?.trim();
+  const serviceRoleKey =
+    source.SUPABASE_SECRET_KEY?.trim() ??
+    source.SUPABASE_SERVICE_ROLE_KEY?.trim();
   const production =
     source.NODE_ENV === "production" || source.VERCEL_ENV === "production";
   if (
@@ -90,7 +92,7 @@ export function readServerEnvironment(source: EnvironmentSource = process.env) {
       placeholder.test(serviceRoleKey))
   ) {
     throw new Error(
-      "SUPABASE_SERVICE_ROLE_KEY is required and cannot be a placeholder in production.",
+      "SUPABASE_SECRET_KEY (or legacy SUPABASE_SERVICE_ROLE_KEY) is required and cannot be a placeholder in production.",
     );
   }
 
