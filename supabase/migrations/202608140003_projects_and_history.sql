@@ -687,8 +687,8 @@ begin
       select 1
       from public.system_developer_assignments
       where system_id = target_system_id
-        and effective_from <= transaction_timestamp()
-        and (effective_to is null or effective_to > transaction_timestamp())
+        and effective_from <= statement_timestamp()
+        and (effective_to is null or effective_to > statement_timestamp())
     ) then
       raise exception 'A System requires at least one current Developer assignment';
     end if;
@@ -749,8 +749,8 @@ begin
     into current_owner_count
     from public.module_owner_assignments
     where module_id = target_module_id
-      and effective_from <= transaction_timestamp()
-      and (effective_to is null or effective_to > transaction_timestamp());
+      and effective_from <= statement_timestamp()
+      and (effective_to is null or effective_to > statement_timestamp());
 
     if current_owner_count <> 1 then
       raise exception 'A Module requires exactly one current Owner assignment';
@@ -805,10 +805,10 @@ begin
     join public.people as person on person.id = assignment.person_id
     where assignment.project_id = project_row.id
       and assignment.person_id = project_row.pmo_officer_id
-      and assignment.effective_from <= transaction_timestamp()
+      and assignment.effective_from <= statement_timestamp()
       and (
         assignment.effective_to is null
-        or assignment.effective_to > transaction_timestamp()
+        or assignment.effective_to > statement_timestamp()
       )
       and person.active
   ) then
@@ -821,10 +821,10 @@ begin
     join public.people as person on person.id = assignment.person_id
     where assignment.project_id = project_row.id
       and assignment.person_id = project_row.ball_owner_id
-      and assignment.effective_from <= transaction_timestamp()
+      and assignment.effective_from <= statement_timestamp()
       and (
         assignment.effective_to is null
-        or assignment.effective_to > transaction_timestamp()
+        or assignment.effective_to > statement_timestamp()
       )
       and person.active
   ) then
@@ -935,23 +935,23 @@ begin
   if exists (
     select 1 from public.system_developer_assignments
     where person_id = new.id
-      and effective_from <= transaction_timestamp()
-      and (effective_to is null or effective_to > transaction_timestamp())
+      and effective_from <= statement_timestamp()
+      and (effective_to is null or effective_to > statement_timestamp())
   ) or exists (
     select 1 from public.module_owner_assignments
     where person_id = new.id
-      and effective_from <= transaction_timestamp()
-      and (effective_to is null or effective_to > transaction_timestamp())
+      and effective_from <= statement_timestamp()
+      and (effective_to is null or effective_to > statement_timestamp())
   ) or exists (
     select 1 from public.project_pmo_assignments
     where person_id = new.id
-      and effective_from <= transaction_timestamp()
-      and (effective_to is null or effective_to > transaction_timestamp())
+      and effective_from <= statement_timestamp()
+      and (effective_to is null or effective_to > statement_timestamp())
   ) or exists (
     select 1 from public.project_participant_assignments
     where person_id = new.id
-      and effective_from <= transaction_timestamp()
-      and (effective_to is null or effective_to > transaction_timestamp())
+      and effective_from <= statement_timestamp()
+      and (effective_to is null or effective_to > statement_timestamp())
   ) then
     raise exception 'Close all current assignments before deactivating a Person';
   end if;

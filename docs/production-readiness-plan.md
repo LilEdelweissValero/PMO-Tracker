@@ -2,7 +2,7 @@
 
 Status: Approved and in progress
 
-Progress: Tasks 1–4 completed on 2026-08-14. Task 5 is next.
+Progress: Tasks 1–5 completed on 2026-08-14. Task 6 is next.
 
 ## 1. Outcome
 

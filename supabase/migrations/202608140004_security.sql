@@ -55,10 +55,10 @@ as $$
       join public.project_pmo_assignments as assignment
         on assignment.project_id = project.id
        and assignment.person_id = project.pmo_officer_id
-       and assignment.effective_from <= transaction_timestamp()
+       and assignment.effective_from <= statement_timestamp()
        and (
          assignment.effective_to is null
-         or assignment.effective_to > transaction_timestamp()
+         or assignment.effective_to > statement_timestamp()
        )
       join public.profiles as profile
         on profile.person_id = assignment.person_id
