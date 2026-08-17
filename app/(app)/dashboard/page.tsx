@@ -1,9 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  IconArrowUpRight,
   IconBuildingBank,
-  IconClock,
   IconGauge,
   IconShieldCheck,
 } from "@tabler/icons-react";
@@ -16,7 +14,6 @@ const kras = [
   {
     name: "Project Efficiency",
     icon: IconGauge,
-    tone: "violet",
     metrics: [
       ["Schedule Performance Index", "SPI = EV / PV · target ≥ 1.0"],
       ["Cost Performance Index", "CPI = EV / AC · target ≥ 1.0"],
@@ -26,7 +23,6 @@ const kras = [
   {
     name: "Project Safety",
     icon: IconShieldCheck,
-    tone: "mint",
     metrics: [
       ["Change Control Stability", "Stable below 10%"],
       ["Health Recovery Rate", "Target ≥ 75%"],
@@ -35,7 +31,6 @@ const kras = [
   {
     name: "Project Governance",
     icon: IconBuildingBank,
-    tone: "yellow",
     metrics: [
       ["Methodology Compliance", "Target ≥ 95%"],
       ["Documentation Compliance", "Target 100%"],
@@ -63,79 +58,29 @@ export default async function Dashboard() {
 
   return (
     <div className="dashboard-board">
-      <header className="dashboard-intro">
-        <div>
-          <span className="dashboard-kicker">
-            Portfolio control · Philippine time
-          </span>
-          <h1>
-            Good morning,
-            <br />
-            PMO.
-          </h1>
-          <p>
-            Start with the work that has waited longest, then keep the Ball
-            moving.
-          </p>
-        </div>
-        <div className="dashboard-period">
-          <label htmlFor="kpi-period">KPI period</label>
-          <select id="kpi-period" defaultValue="quarter">
-            <option value="month">Current month</option>
-            <option value="quarter">Current quarter</option>
-            <option value="year">Current year</option>
-            <option value="custom">Custom range</option>
-          </select>
-        </div>
-      </header>
-
-      <section className="waiting-deck" aria-labelledby="waiting-title">
-        <div className="instrument-heading">
+      <section
+        className="kra-instruments"
+        aria-labelledby="dashboard-kpi-title"
+      >
+        <header className="kpi-toolbar">
           <div>
-            <span className="instrument-label">Attention queue</span>
-            <h2 id="waiting-title">Longest waiting</h2>
+            <span className="instrument-label">Portfolio measures</span>
+            <h1 id="dashboard-kpi-title">KPI definitions</h1>
           </div>
-          <Link href="/ball" className="text-link">
-            View every handoff <IconArrowUpRight size={17} />
-          </Link>
-        </div>
-        <div className="waiting-list">
-          {projects.map((project) => (
-            <Link
-              href={`/projects/${project.code}`}
-              className="waiting-item"
-              key={project.code}
-            >
-              <span
-                className={`waiting-signal group-${project.group.toLowerCase().replaceAll(" ", "-")}`}
-              />
-              <span>
-                <small>{project.code}</small>
-                <strong>{project.name}</strong>
-                <span>
-                  {project.owner} · {project.group}
-                </span>
-              </span>
-              <time>
-                <IconClock size={14} />
-                {project.held}
-              </time>
-            </Link>
-          ))}
-          {!projects.length && (
-            <div className="notice">No active Projects are waiting.</div>
-          )}
-        </div>
-      </section>
-
-      <section className="kra-instruments" aria-label="KRA and KPI definitions">
+          <div className="dashboard-period">
+            <label htmlFor="kpi-period">KPI period</label>
+            <select id="kpi-period" defaultValue="quarter">
+              <option value="month">Current month</option>
+              <option value="quarter">Current quarter</option>
+              <option value="year">Current year</option>
+              <option value="custom">Custom range</option>
+            </select>
+          </div>
+        </header>
         {kras.map((kra) => {
           const Icon = kra.icon;
           return (
-            <article
-              className={`kra-instrument tone-${kra.tone}`}
-              key={kra.name}
-            >
+            <article className="kra-instrument" key={kra.name}>
               <div className="kra-title">
                 <span className="kra-icon">
                   <Icon size={21} />
@@ -169,7 +114,7 @@ export default async function Dashboard() {
           </div>
           {currentBall && (
             <Link
-              className="button pink"
+              className="button dashboard-action"
               href={`/projects/${encodeURIComponent(currentBall.code)}?dialog=progress`}
             >
               Add Progress
@@ -199,7 +144,7 @@ export default async function Dashboard() {
           </div>
           {currentBall && (
             <Link
-              className="bump-button"
+              className="bump-button dashboard-action"
               href={`/projects/${encodeURIComponent(currentBall.code)}?dialog=bump`}
             >
               <span>Bump</span>
@@ -231,50 +176,6 @@ export default async function Dashboard() {
           )}
         </div>
       </section>
-
-      <aside className="ball-dock" aria-labelledby="ball-title">
-        <div className="ball-dock-copy">
-          <span className="instrument-label">Currently in play</span>
-          <h2 id="ball-title">The Ball</h2>
-          <p>One owner. No ambiguity.</p>
-        </div>
-        <div className="ball-artwork">
-          <span className="ball-orbit" aria-hidden="true" />
-          <Image
-            src="/assets/ball.png"
-            alt="A polished 3D basketball representing current Project responsibility"
-            width={360}
-            height={360}
-            priority
-          />
-        </div>
-        {currentBall ? (
-          <div className="ball-owner">
-            <small>Ball with · {currentBall.group}</small>
-            <strong>{currentBall.owner}</strong>
-            <time>
-              <IconClock size={17} />
-              Held {currentBall.held}
-            </time>
-          </div>
-        ) : (
-          <div className="ball-owner">
-            <small>Portfolio clear</small>
-            <strong>No active handoffs</strong>
-          </div>
-        )}
-        <Link className="button ball-action" href="/ball">
-          View Ball relay <IconArrowUpRight size={18} />
-        </Link>
-        <div className="relay-note">
-          <span aria-hidden="true">✦</span>
-          <p>
-            Small handoffs.
-            <br />
-            <strong>Clear momentum.</strong>
-          </p>
-        </div>
-      </aside>
     </div>
   );
 }

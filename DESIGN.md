@@ -1,6 +1,6 @@
 ---
 name: PMO Tracker
-description: A kinetic project studio where accountable work feels clear, tactile, and alive.
+description: A compact portfolio workspace where accountable work is clear, calm, and useful.
 colors:
   studio-violet: "#5b37f2"
   studio-violet-deep: "#3216a9"
@@ -55,39 +55,39 @@ typography:
     fontWeight: 750
     lineHeight: 1.4
 rounded:
-  sm: "10px"
-  md: "14px"
-  lg: "18px"
-  xl: "24px"
+  sm: "7px"
+  md: "10px"
+  lg: "13px"
+  xl: "16px"
 spacing:
-  xs: "6px"
-  sm: "10px"
-  md: "14px"
-  lg: "18px"
-  xl: "24px"
-  section: "42px"
+  xs: "4px"
+  sm: "8px"
+  md: "12px"
+  lg: "16px"
+  xl: "20px"
+  section: "28px"
 components:
   button-primary:
     backgroundColor: "{colors.technical-plum}"
     textColor: "{colors.white}"
     typography: "{typography.body}"
     rounded: "{rounded.sm}"
-    padding: "0.65rem 1rem"
-    height: "42px"
+    padding: "0.55rem 0.85rem"
+    height: "40px"
   button-action:
     backgroundColor: "{colors.action-candy}"
     textColor: "{colors.graphite-ink}"
     typography: "{typography.body}"
     rounded: "{rounded.sm}"
-    padding: "0.65rem 1rem"
-    height: "42px"
+    padding: "0.55rem 0.85rem"
+    height: "40px"
   input:
     backgroundColor: "{colors.white}"
     textColor: "{colors.graphite-ink}"
     typography: "{typography.body}"
     rounded: "{rounded.sm}"
-    padding: "9px 12px"
-    height: "42px"
+    padding: "7px 10px"
+    height: "40px"
   technical-stage:
     backgroundColor: "{colors.technical-plum}"
     textColor: "{colors.white}"
@@ -96,24 +96,24 @@ components:
 ---
 
 <!--
-THESIS: PMO work becomes a kinetic project studio, refusing both generic enterprise dashboards and childish pastel toyboxes.
-OWN-WORLD: A luminous violet field, creamy instrument decks, charcoal data stages, oversized friendly lettering, candy-bright labels, and original sculpted project objects.
-STORY: The PMO sees who holds responsibility, what has waited longest, and where to act next; playful material makes rigorous stewardship inviting.
-FIRST VIEWPORT: A typographic greeting shares the top stage with the living Ball, its current owner, and the oldest handoffs; compact portfolio evidence follows without a decorative preamble.
-FORM: The Kinetic Project Studio; sixth grounded direction; model-shop control-desk staging; seed 63f13089.
+THESIS: PMO work is a compact operational workspace where hierarchy, evidence, and action stay clear without decorative competition.
+OWN-WORLD: A restrained violet shell, warm neutral work surfaces, charcoal activity stages, precise typography, and rare sculpted project objects used only where they aid recognition.
+STORY: The PMO sees definitions, current activity, responsibility, and the next action quickly; useful density makes rigorous stewardship easier.
+FIRST VIEWPORT: Three KPI definitions establish portfolio measures, followed by Progress and Bump activity tables that fill the remaining working area.
+FORM: The Compact Portfolio Workspace; a calm instrument desk with restrained brand expression.
 -->
 
 # Design System: PMO Tracker
 
 ## Overview
 
-**Creative North Star: “The Kinetic Project Studio”**
+**Creative North Star: “The Compact Portfolio Workspace”**
 
-PMO Tracker is a glamorous working studio for serious portfolio stewardship. It combines the confidence of beautifully art-directed software with the physical delight of a model shop: luminous color fields, creamy instrument panels, deep technical canvases, friendly oversized type, tiny categorical badges, and a small family of original three-dimensional project objects. The result is whimsical and cute without becoming juvenile, and operational without becoming anonymous.
+PMO Tracker is a calm, compact workspace for serious portfolio stewardship. A restrained violet shell frames warm neutral working surfaces and deep operational tables. Typography is friendly but controlled, color is sparse, and dimensional objects are reserved for the few product concepts where recognition matters.
 
 The interface always keeps accountability ahead of spectacle. Current ownership, Stage, State, age, and next action remain readable without interpreting an illustration. Dimensional objects create recognition and reward around the product’s unique language; they never become a parallel icon system for ordinary navigation or status.
 
-The Dashboard is the first proving surface. It opens with the Ball, the longest-waiting work, and the action that matters now. KPI definitions, Progress, and Bumps follow as compact instruments rather than a generic grid of interchangeable cards.
+The Dashboard is the first proving surface. It focuses on the three KPI definitions and the latest Progress and Bump activity, without an introductory hero, attention queue, or Ball panel. The two activity tables consume the remaining desktop workspace.
 
 **Key Characteristics:**
 
@@ -178,23 +178,23 @@ Typography carries most of the personality. Bricolage Grotesque supplies buoyant
 
 ## Layout
 
-The application uses a studio-and-instrument model. A saturated shell provides identity and navigation; cream decks hold routine work; dark technical stages concentrate timelines, queues, or evidence. Surfaces may overlap or break the grid at expressive moments, but dense operational rows remain aligned to predictable columns.
+The application uses a compact workspace model. A dark violet shell provides identity and navigation; warm neutral surfaces hold routine work; dark technical stages concentrate timelines, queues, and evidence. Dense operational rows align to predictable columns, and decorative overlap is avoided.
 
-The Dashboard’s first viewport pairs an oversized greeting with a living ownership module: a dimensional basketball, its current holder, and the oldest waiting handoffs. The Ball is a focal anchor, not a full-screen hero. Progress and Bump queues begin within the same viewport on common laptop sizes so daily work is never pushed below decoration.
+The Dashboard’s first viewport begins with three compact KPI definitions. Latest Progress leads below in a wider table while Latest Bumps supports it in a narrower table; both extend to the bottom of the desktop work area. The attention queue and Ball panel live on their dedicated views rather than competing with Dashboard activity.
 
-KRA/KPI definitions read as a deliberately composed instrument cluster of clean, regular panels. They may vary in size or emphasis, but their silhouettes stay simple and well proportioned; novelty cut corners, skewed tiles, and arbitrary polygon cards are forbidden. “Not yet calculated” remains visibly honest and never appears as a fabricated chart. Latest Progress and Latest Bumps use distinct pacing and signature markers while sharing the same scan order.
+KRA/KPI definitions read as one restrained instrument cluster. All three share the same warm neutral material and differ through content and icon, not separate pastel color fields. “Not yet calculated” remains visibly honest and never appears as a fabricated chart.
 
-Desktop uses a 220px navigation bay and a fluid cream workbench with 12px shell gaps. At 1320px, the lower Progress and Bump technical stages stack before their internal record columns can collide. At 1050px, the navigation contracts to a 76px icon rail and the Dashboard becomes one primary column. At 700px, the shell becomes a linear page with a 66px floating bottom navigation, 14px side padding, and 96px bottom clearance. Administration tables may scroll horizontally rather than hide required facts.
+Desktop uses a 220px navigation bay and a fluid cream workbench with 8px shell gaps. At 1050px, navigation contracts to a 76px icon rail and activity tables stack in one primary column. At 700px, the shell becomes a linear page with a 66px floating bottom navigation, 14px side padding, and 96px bottom clearance. Administration tables may scroll horizontally rather than hide required facts.
 
-The spatial rhythm is intentionally compact: 6px micro-gaps, 10–18px component gaps, 24px major padding, and 42px between long-form sections. Responsive rules protect readable content before preserving a decorative arrangement.
+The spatial rhythm is intentionally compact: 4px micro-gaps, 8–12px component gaps, 16–20px major padding, and 28px between long-form sections. Responsive rules protect readable content before preserving any decorative arrangement.
 
-**The Work Starts Above the Fold Rule.** On the Dashboard, at least one actionable queue or oldest-waiting record must be visible in the first viewport.
+**The Work Starts Above the Fold Rule.** On the Dashboard, KPI definitions and actionable Progress or Bump records must be visible in the first viewport.
 
 **The Plain Vessel Rule.** Containers stay geometrically quiet so typography, 3D objects, color, and motion can carry the whimsy.
 
 ## Elevation & Depth
 
-Depth is tactile and structural. Cream panels sit above the violet field with a broad deck shadow (`0 12px 0 rgba(47, 26, 126, 0.08), 0 22px 48px rgba(37, 22, 87, 0.16)`); dark technical stages use a firmer mounted shadow (`0 8px 0 #cfc2ad, 0 20px 36px rgba(29, 20, 55, 0.18)`). Controls use a crisp contact shadow (`0 5px 0 rgba(30, 20, 75, 0.2), 0 10px 24px rgba(30, 20, 75, 0.14)`) and a small physical press response. Three-dimensional signature objects use soft studio lighting, rounded materials, and believable contact or cast shadows appropriate to their scene.
+Depth is quiet and structural. The main work surface uses one shallow deck shadow; routine panels prefer a boundary or a shadow, never both. Dark technical stages sit flat against the workbench. Controls use a restrained contact edge and a one-pixel press response. Three-dimensional signature objects retain believable lighting only where they remain intentionally featured.
 
 Avoid glassmorphism, translucent card stacks, neon glows around every edge, and generic floating-gradient blobs. Atmospheric light may live in the violet background, but working content must retain strong boundaries and contrast.
 
@@ -202,9 +202,9 @@ Avoid glassmorphism, translucent card stacks, neon glows around every edge, and 
 
 ## Shapes
 
-The form language mixes soft sculpted objects with disciplined instruments. Major cream panels use generous, friendly corners; dark data stages use slightly tighter geometry. Buttons and inputs feel compact and tactile rather than pill-shaped by default. Small pills are reserved for categorical badges, State, Priority, and concise status notes.
+The form language pairs rare sculpted objects with disciplined instruments. Major cream panels use restrained corners; dark data stages use slightly tighter geometry. Buttons and inputs feel compact and direct rather than pill-shaped by default. Small pills are reserved for categorical badges, State, Priority, and concise status notes.
 
-The implemented radius scale is 10px for controls, 14px for record groups, 18px for mounted panels, and 24px for major shell surfaces. Circular geometry is reserved for group signals, avatars, and the Ball's orbit—not ordinary containers.
+The implemented radius scale is 7px for controls, 10px for record groups, 13px for mounted panels, and 16px for major shell surfaces. Circular geometry is reserved for group signals, avatars, and the Ball's orbit—not ordinary containers.
 
 The 3D Ball is a recognizable basketball with accurate seam logic, a softly inflated silhouette, and an authored PMO Tracker personality expressed through pose and motion—not a pasted face. It may be accompanied by a small orbit, holder tag, or relay trail, but it must remain visually legible at compact sizes.
 
@@ -214,7 +214,7 @@ The Bump object is a sculpted fist-bump motif. At rest, the control shows a comp
 
 ### The Ball
 
-The Ball is the product’s living responsibility marker. On the Dashboard it appears as a polished 3D basketball at focal scale, paired with the written owner, ownership group, held duration, and the oldest relevant handoffs. In dense rows it becomes a small rendered or simplified authored mark, never an emoji.
+The Ball is the product’s living responsibility marker. It receives focal treatment on the dedicated Ball View and project workflows, not on the Dashboard. In dense rows it becomes a small rendered or simplified authored mark, never an emoji.
 
 When ownership transfers, the Ball follows one short directional arc from the previous holder to the new holder, settles with a restrained spring, and stops. No perpetual bouncing in tables or forms. With reduced motion, use an immediate state change or brief cross-fade while preserving the old and new owner labels in the confirmation message.
 
@@ -232,19 +232,19 @@ Cream panels host forms, explanations, and routine summaries. Dark technical sta
 
 ### Buttons and Fields
 
-Principal mutations use Action Candy, direct verbs, 10px corners, a minimum 42px height, and 10px × 16px internal padding. Default actions use Technical Plum; secondary actions use Instrument Cream. Hover lifts 2px, active presses 2px, and disabled controls remove motion and shadow. Every interactive element uses a 3px Signal Cyan focus ring with a 3px offset.
+Principal mutations use one clear accent, direct verbs, 7px corners, a minimum 40px height, and compact internal padding. Default actions use Technical Plum or Studio Violet; secondary actions use Instrument Cream. Hover lifts 1px, active presses 1px, and disabled controls remove motion and shadow. Every interactive element uses a 3px Signal Cyan focus ring with a 3px offset.
 
-Fields use a white surface, 1px warm-gray border, 10px corners, 9px × 12px padding, and a 42px minimum height. Hover shifts the border to Studio Violet Soft; focus uses the global cyan ring. Labels persist above fields. Terminal State actions state irreversibility before confirmation.
+Fields use a white surface, 1px warm-gray border, 7px corners, 7px × 10px padding, and a 40px minimum height. Hover shifts the border to Studio Violet Soft; focus uses the global cyan ring. Labels persist above fields. Terminal State actions state irreversibility before confirmation.
 
 ### Navigation
 
-Navigation belongs to the violet studio frame and uses simple, familiar symbols plus written labels. Desktop entries have 10px corners and 11px × 12px padding. The selected item becomes a cream plate with dark text and a violet icon, so selection is obvious without color alone. At 1050px it contracts to an icon rail; at 700px it becomes a six-item floating bottom tray. Signature 3D objects do not replace general navigation icons.
+Navigation belongs to the dark violet frame and uses simple, familiar symbols plus written labels. Desktop entries have 7px corners and compact padding. The selected item becomes a cream plate with dark text and a violet icon, so selection is obvious without color alone. At 1050px it contracts to an icon rail; at 700px it becomes a six-item floating bottom tray. Signature 3D objects do not replace general navigation icons.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- **Do** make the Ball the clearest recurring expression of accountability across Dashboard, Ball View, Project details, and transfer feedback.
+- **Do** make the Ball the clearest recurring expression of accountability across Ball View, Project details, and transfer feedback.
 - **Do** give Bump a memorable dimensional fist motif while keeping the action’s conversational meaning explicit.
 - **Do** use expressive type and authored spacing before adding more illustration.
 - **Do** reserve full 3D rendering for signature concepts, onboarding, empty states, and important transitions.

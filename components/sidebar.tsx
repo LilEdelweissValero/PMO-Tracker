@@ -53,7 +53,6 @@ export function Sidebar({
         </span>
         <span>
           <b>PMO Tracker</b>
-          <small>Kinetic project studio</small>
         </span>
       </Link>
       <nav aria-label="Primary">
