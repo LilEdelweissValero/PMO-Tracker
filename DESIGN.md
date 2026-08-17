@@ -55,10 +55,10 @@ typography:
     fontWeight: 750
     lineHeight: 1.4
 rounded:
-  sm: "7px"
-  md: "10px"
-  lg: "13px"
-  xl: "16px"
+  sm: "4px"
+  md: "6px"
+  lg: "8px"
+  xl: "10px"
 spacing:
   xs: "4px"
   sm: "8px"
@@ -194,7 +194,7 @@ The spatial rhythm is intentionally compact: 4px micro-gaps, 8–12px component 
 
 ## Elevation & Depth
 
-Depth is quiet and structural. The main work surface uses one shallow deck shadow; routine panels prefer a boundary or a shadow, never both. Dark technical stages sit flat against the workbench. Controls use a restrained contact edge and a one-pixel press response. Three-dimensional signature objects retain believable lighting only where they remain intentionally featured.
+The interface is flat. Surfaces separate through color, borders, and spacing rather than cast shadows, contact edges, hover lifts, or decorative blur. Three-dimensional artwork may remain as authored content, but the interface does not add simulated depth around it.
 
 Avoid glassmorphism, translucent card stacks, neon glows around every edge, and generic floating-gradient blobs. Atmospheric light may live in the violet background, but working content must retain strong boundaries and contrast.
 
@@ -204,7 +204,7 @@ Avoid glassmorphism, translucent card stacks, neon glows around every edge, and 
 
 The form language pairs rare sculpted objects with disciplined instruments. Major cream panels use restrained corners; dark data stages use slightly tighter geometry. Buttons and inputs feel compact and direct rather than pill-shaped by default. Small pills are reserved for categorical badges, State, Priority, and concise status notes.
 
-The implemented radius scale is 7px for controls, 10px for record groups, 13px for mounted panels, and 16px for major shell surfaces. Circular geometry is reserved for group signals, avatars, and the Ball's orbit—not ordinary containers.
+The implemented radius scale is 4px for controls, 6px for record groups, 8px for mounted panels, and 10px for major shell surfaces. Circular geometry is reserved for group signals, avatars, and the Ball's orbit—not ordinary containers.
 
 The 3D Ball is a recognizable basketball with accurate seam logic, a softly inflated silhouette, and an authored PMO Tracker personality expressed through pose and motion—not a pasted face. It may be accompanied by a small orbit, holder tag, or relay trail, but it must remain visually legible at compact sizes.
 
@@ -232,13 +232,13 @@ Cream panels host forms, explanations, and routine summaries. Dark technical sta
 
 ### Buttons and Fields
 
-Principal mutations use one clear accent, direct verbs, 7px corners, a minimum 40px height, and compact internal padding. Default actions use Technical Plum or Studio Violet; secondary actions use Instrument Cream. Hover lifts 1px, active presses 1px, and disabled controls remove motion and shadow. Every interactive element uses a 3px Signal Cyan focus ring with a 3px offset.
+Principal mutations use one clear accent, direct verbs, 4px corners, a minimum 40px height, and compact internal padding. Default actions use Technical Plum or Studio Violet; secondary actions use Instrument Cream. Hover and active states change color without simulated movement or depth. Every interactive element uses a 3px Signal Cyan focus ring with a 3px offset.
 
-Fields use a white surface, 1px warm-gray border, 7px corners, 7px × 10px padding, and a 40px minimum height. Hover shifts the border to Studio Violet Soft; focus uses the global cyan ring. Labels persist above fields. Terminal State actions state irreversibility before confirmation.
+Fields use a white surface, 1px warm-gray border, 4px corners, 7px × 10px padding, and a 40px minimum height. Hover shifts the border to Studio Violet Soft; focus uses the global cyan ring. Labels persist above fields. Terminal State actions state irreversibility before confirmation.
 
 ### Navigation
 
-Navigation belongs to the dark violet frame and uses simple, familiar symbols plus written labels. Desktop entries have 7px corners and compact padding. The selected item becomes a cream plate with dark text and a violet icon, so selection is obvious without color alone. At 1050px it contracts to an icon rail; at 700px it becomes a six-item floating bottom tray. Signature 3D objects do not replace general navigation icons.
+Navigation belongs to the dark violet frame and uses simple, familiar symbols plus written labels. Desktop entries have 4px corners and compact padding. The selected item becomes a flat cream plate with dark text and a violet icon, so selection is obvious without color alone. At 1050px it contracts to an icon rail; at 700px it becomes a six-item floating bottom tray. Signature 3D objects do not replace general navigation icons.
 
 ## Do's and Don'ts
 

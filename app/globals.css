@@ -18,19 +18,20 @@
   --hold-yellow: #ffd15d;
   --danger: #c9345e;
   --white: #ffffff;
-  --radius-sm: 7px;
-  --radius-md: 10px;
-  --radius-lg: 13px;
-  --radius-xl: 16px;
-  --shadow-contact:
-    0 2px 0 rgba(30, 20, 75, 0.18), 0 6px 14px rgba(30, 20, 75, 0.1);
-  --shadow-deck:
-    0 4px 0 rgba(47, 26, 126, 0.06), 0 12px 28px rgba(37, 22, 87, 0.12);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --shadow-contact: none;
+  --shadow-deck: none;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+  box-shadow: none !important;
 }
 
 .sr-only {
@@ -95,14 +96,12 @@ button,
 
 button:hover,
 .button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 3px 0 rgba(30, 20, 75, 0.18);
+  transform: none;
 }
 
 button:active,
 .button:active {
-  transform: translateY(1px);
-  box-shadow: none;
+  transform: none;
 }
 
 button:disabled,
@@ -239,7 +238,6 @@ textarea:focus-visible {
 .sidebar nav a:hover {
   color: var(--white);
   background: rgba(255, 255, 255, 0.09);
-  transform: translateX(2px);
 }
 
 .sidebar nav a[aria-current="page"] {
@@ -550,7 +548,6 @@ textarea:focus-visible {
 .strip:hover {
   z-index: 1;
   background: #f7f3ff;
-  transform: translateX(4px);
 }
 
 .strip-code {
@@ -1354,7 +1351,7 @@ textarea:focus-visible {
 }
 
 .dashboard-action:hover {
-  box-shadow: 0 4px 0 var(--studio-violet-deep);
+  background: var(--studio-violet-deep);
 }
 
 .bump-button {
@@ -1381,15 +1378,15 @@ textarea:focus-visible {
 }
 
 .bump-button:hover {
-  transform: translateY(-2px);
+  background: var(--studio-violet-deep);
 }
 
 .bump-button:hover img {
-  transform: translateX(-4px) rotate(-6deg) scale(1.06);
+  transform: none;
 }
 
 .bump-button:active img {
-  transform: translateX(-8px) scale(0.94);
+  transform: none;
 }
 
 .bump-feed {
@@ -1438,12 +1435,10 @@ textarea:focus-visible {
   from {
     opacity: 0.5;
     transform: translateY(-12px) rotate(-2deg) scale(0.96);
-    filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.22));
   }
   to {
     opacity: 1;
     transform: translateY(0) rotate(0) scale(1);
-    filter: drop-shadow(0 18px 14px rgba(0, 0, 0, 0.28));
   }
 }
 
@@ -1471,7 +1466,6 @@ textarea:focus-visible {
   height: auto;
   object-fit: contain;
   animation: ball-settle 760ms var(--ease-out) both;
-  filter: drop-shadow(0 12px 10px rgba(33, 20, 74, 0.2));
 }
 
 /* Login */
@@ -1485,9 +1479,7 @@ textarea:focus-visible {
 }
 
 .login-atmosphere {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+  display: none;
 }
 
 .login-orb {

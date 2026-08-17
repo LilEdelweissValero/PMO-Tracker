@@ -36,6 +36,7 @@ The Bump control is the memorable object. It may anticipate slightly, then compl
 - Project rows preserve Code, name with State/Priority, Stage, Ball Owner, and held duration.
 - Use regular rectangular or softly rounded KRA/KPI panels; no skewed, clipped, polygonal, or novelty-shaped cards.
 - Use one violet accent plus warm and dark neutrals; semantic status colors remain small and always accompanied by text.
+- Keep interface surfaces flat: use borders, spacing, and color instead of cast shadows, contact edges, or hover lifts.
 - Dimensional objects never replace labels, familiar controls, status text, or navigation icons.
 - Mobile linearizes KPI definitions, then Progress, then Bumps.
 
