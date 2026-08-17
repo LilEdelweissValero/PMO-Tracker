@@ -1167,15 +1167,12 @@ textarea:focus-visible {
 /* Dashboard: approved Studio Instrument Wall */
 .dashboard-board {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(270px, 0.65fr) minmax(
-      280px,
-      0.7fr
-    );
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-template-areas:
-    "intro intro ball"
-    "waiting waiting ball"
-    "kras kras ball"
-    "progress bumps ball";
+    "intro intro intro ball"
+    "waiting waiting waiting ball"
+    "kras kras kras ball"
+    "progress progress bumps bumps";
   gap: 16px;
   align-items: stretch;
 }
@@ -1790,7 +1787,7 @@ textarea:focus-visible {
   text-align: center;
 }
 
-@media (max-width: 1320px) {
+@media (max-width: 1050px) {
   .dashboard-board {
     grid-template-columns: minmax(0, 1.4fr) minmax(300px, 0.6fr);
     grid-template-areas:
